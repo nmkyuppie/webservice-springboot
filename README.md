@@ -1,7 +1,4 @@
-# webservice-springboot
-web service uses postgres
-
-## **ToDo
+## ToDo
 
 Change data base details in `application.properties`
 
