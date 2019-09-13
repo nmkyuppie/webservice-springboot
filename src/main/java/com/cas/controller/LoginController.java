@@ -48,7 +48,6 @@ public class LoginController {
 			
 		}
 		else {
-			response.setResult(isUserExist);
 			response.setErrorMessage("User name is invalid.");
 		}
 		response.setStatus(HttpStatus.OK.getReasonPhrase());
