@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import com.cas.business.login.service.LoginService;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin
 public class LoginController {	
 
 	@Autowired
