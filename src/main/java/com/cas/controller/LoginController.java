@@ -26,7 +26,7 @@ public class LoginController {
 	
 	@ResponseBody
 	String hi() {
-		return "Hello";
+		return "HelloWorld";
 	}
 	
 	@GetMapping(value="/login")
