@@ -1,4 +1,4 @@
-package com.cas.business.login.service.impl;
+package com.cas.business.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cas.business.entity.LoginDetails;
-import com.cas.business.login.service.LoginService;
 import com.cas.business.repository.LoginDetailsRepository;
+import com.cas.business.service.LoginService;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
 @Service

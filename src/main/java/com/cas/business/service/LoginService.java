@@ -1,4 +1,4 @@
-package com.cas.business.login.service;
+package com.cas.business.service;
 
 import com.cas.business.entity.LoginDetails;
 
