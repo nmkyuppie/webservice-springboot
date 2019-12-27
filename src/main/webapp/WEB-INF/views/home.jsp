@@ -37,7 +37,7 @@
         <div class="container-fluid">
             <div class="row justify-content-end" style="margin-top: -15px;">
             	<div class="col offset-md-6">
-            		<form action="/branch" method="GET">
+            		<form action="/branch/add" method="GET">
             			<input type="submit" class="btn btn-primary float-right" value="Add Branch">
             		</form>
             	</div>

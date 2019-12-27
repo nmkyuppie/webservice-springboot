@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cas.business.entity.LoginDetails;
+import com.cas.business.entity.UserDetails;
 import com.cas.business.repository.LoginDetailsRepository;
 import com.cas.business.service.LoginService;
 
@@ -19,7 +19,7 @@ public class LoginServiceImpl implements LoginService {
 	LoginDetailsRepository loginDetailsRepository;
 
 	@Override
-	public LoginDetails validateUser(String userName, String password) {
+	public UserDetails validateUser(String userName, String password) {
 		return loginDetailsRepository.findByUserNameAndPassword(userName, password);
 	}
 

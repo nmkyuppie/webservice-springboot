@@ -14,6 +14,7 @@ $(function() {
 });
 
 $(document).ready(function () {
+    $(".jumbotron-table").css("height", window.innerHeight-180+"px");
     $('label.tree-toggler').click(function () {
         $(this).parent().children('ul.tree').toggle(300);
     });

@@ -1,10 +1,10 @@
 package com.cas.business.service;
 
-import com.cas.business.entity.LoginDetails;
+import com.cas.business.entity.UserDetails;
 
 public interface LoginService {
 
-	public LoginDetails validateUser(String userName, String password);
+	public UserDetails validateUser(String userName, String password);
 
 	public Boolean existsByUserName(String userName);
 }

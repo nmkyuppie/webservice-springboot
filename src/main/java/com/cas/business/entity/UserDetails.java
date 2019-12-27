@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDetails implements Serializable {
+public class UserDetails implements Serializable {
 
 	private static final long serialVersionUID = 7146274284775558256L;
 

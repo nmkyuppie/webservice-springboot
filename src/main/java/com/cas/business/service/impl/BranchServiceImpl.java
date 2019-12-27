@@ -1,6 +1,8 @@
 package com.cas.business.service.impl;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,6 +23,16 @@ public class BranchServiceImpl implements BranchService {
 	@Override
 	public Society save(Society society) {
 		return branchRepository.save(society);
+	}
+
+	@Override
+	public List<Society> findAll() {
+		return branchRepository.findByOrderByBranchIdAsc();
+	}
+
+	@Override
+	public Society findById(Integer branchId) {
+		return branchRepository.findById(branchId).get();
 	}
 
 }
