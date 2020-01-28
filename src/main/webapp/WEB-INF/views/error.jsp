@@ -1,51 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page session="false" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>Error</title>
+	<title>Page not found</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="static/css/bootstrap.css">
-    <link rel="stylesheet" href="static/css/styles.css">
-	<style type="text/css">
-	.errorMessage{
-		color: #fff;
-	    background: var(--danger);
-	    width: fit-content;
-	    display: inline-block;
-	    padding: 5px;
-	    border-radius: 4px;
-	    margin-bottom: 10px;
-	}
-	</style>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
     
   </head>
   <body>
         <div class="wrapper fadeInDown">
-            <div id="formContent">
+            <div class="jumbotron" style="padding:2rem;">
                 <!-- Tabs Titles -->
+                <legend style="text-align: center;">Core Banking Solutions</legend><br>
             
                 <!-- Icon -->
-                <div class="fadeIn first">
-                    <i class="fa fa-user" aria-hidden="true" style="font-size: 5rem;"></i>
+                <div class="fadeIn first" align="center">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true" style="font-size: 5rem;"></i>
                 </div>
-            
+                <label>You are not logged in to view this page.</label>
+            	 
                 <!-- Login Form -->
-                <form>
-                    <input type="text" id="userName" class="fadeIn second" name="login" placeholder="Username">
-                    <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
-                    <input type="button" class="fadeIn fourth" value="Log In" onclick="validateUser()" style="margin-bottom:20px;">
-                    <br>
-                    <div class="errorMessage" id="errorMessage"></div>
+                <form method="get" action="/login" align="center">
+                    <button type="submit" class="btn btn-primary fadeIn fourth" onclick="">
+                         	<i class="fa fa-sign-in" aria-hidden="true"></i> Log In
+                     </button>
                 </form>
-            
-                <!-- Remind Password -->
-                <div id="formFooter">
-                    <a class="underlineHover" href="#">Forgot Password?</a>
-                </div>
             
             </div>
         </div>
@@ -57,6 +42,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/1a055a024c.js"></script>
     
-    <script src="static/js/login.js"></script>
+    <script src="../static/js/login.js"></script>
   </body>
 </html>

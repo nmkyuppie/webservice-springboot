@@ -9,34 +9,30 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cas.business.entity.Society;
-import com.cas.business.repository.BranchRepository;
+import com.cas.business.entity.JewelLoan;
 import com.cas.business.repository.JewelLoanRepository;
-import com.cas.business.service.BranchService;
+import com.cas.business.service.JewelLoanService;
 
 @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
 @Service
-public class BranchServiceImpl implements BranchService {
-
-	@Autowired
-	BranchRepository branchRepository;
+public class JewelLoanServiceImpl implements JewelLoanService {
 
 	@Autowired
 	JewelLoanRepository jewelLoanRepository;
 
 	@Override
-	public Society save(Society society) {
-		return branchRepository.save(society);
+	public List<JewelLoan> findAll() {
+		return jewelLoanRepository.findByOrderBySidAsc();
 	}
 
 	@Override
-	public List<Society> findAll() {
-		return branchRepository.findByOrderByBranchIdAsc();
+	public JewelLoan save(JewelLoan jewelLoan) {
+		return jewelLoanRepository.save(jewelLoan);
 	}
 
 	@Override
-	public Society findById(Integer branchId) {
-		return branchRepository.findById(branchId).get();
+	public JewelLoan findById(Integer sid) {
+		return jewelLoanRepository.findById(sid).get();
 	}
 
 }

@@ -302,6 +302,8 @@ input[type=text]:placeholder {
     top: 0;
     width: 100%;
     z-index: 1;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .jumbotron {
@@ -319,13 +321,18 @@ input[type=text]:placeholder {
 	color:#fff;	
 }
 
+.nav-link {
+	color:#03382f !important;
+	text-transform: uppercase;	
+}
+
 .btn-default {
     background-color: #fff;
     color: #004d40;
 }
 
 .container-fluid {
-	margin-top: 70px;
+	margin-top: 58px;
 }
 
 .list-group-item{
@@ -349,4 +356,11 @@ input[type=text]:placeholder {
 
 .btn-danger {
     background-color: #004d40;
+}
+
+.badge {
+	margin-right: 15px;
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 12px;
 }

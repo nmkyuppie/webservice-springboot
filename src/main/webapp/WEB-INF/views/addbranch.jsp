@@ -152,6 +152,7 @@
                                     <div class="col-lg-12">
                                 		<button type="submit" class="btn btn-primary btn-action float-right" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
                                 		<button type="reset" class="btn btn-default btn-action float-right" style="margin-right:15px;"><i class="fa fa-eraser" aria-hidden="true"></i> Clear</button>
+										<span class="badge badge-success  float-right">${message }</span>
                                     </div>
                                 </div>
                             </fieldset>

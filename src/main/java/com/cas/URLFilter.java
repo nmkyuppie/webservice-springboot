@@ -33,7 +33,7 @@ public class URLFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(false);
 		if(session == null) {
 			req.logout();
 		}
@@ -41,7 +41,9 @@ public class URLFilter implements Filter {
 			UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 			if(userDetails ==null || (userDetails.getLoginId() == null && !req.getRequestURI().contains("login"))) {
 				req.logout();
+				session.invalidate();
 			}
+
 		}
 
 		log.info("Request URI is: " + req.getRequestURI());
