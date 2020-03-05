@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.cas.business.entity.Society;
 
-public interface BranchService {
+public interface SocietyService {
 
 	public Society save(Society society);
 

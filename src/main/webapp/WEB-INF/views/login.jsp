@@ -13,18 +13,24 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="static/css/bootstrap.css">
     <link rel="stylesheet" href="static/css/styles.css">
-	<style type="text/css">
-	.errorMessage{
-		color: #fff;
-	    text-align: center;
-	    background: #f26a42;
-	    border-radius: 3px;
-	    font-size: 13px;
-    	padding: 2px;
-	}
-	</style>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     
-  </head>
+<style type="text/css">
+.errorMessage {
+	color: #fff;
+	text-align: center;
+	background: #f26a42;
+	border-radius: 3px;
+	font-size: 13px;
+	padding: 2px;
+}
+
+body {
+	font-family: 'Montserrat', serif;
+}
+</style>
+
+</head>
   <body>
   
         <div class="wrapper fadeInDown">
@@ -35,6 +41,9 @@
                 <!-- Login Form -->
                 
                 <form action="/user/validate" method="POST">
+                <!-- <div align="center">
+                	<i class="fa fa-contao" aria-hidden="true" style="font-size:6rem;"></i><br>
+                </div> -->
                 <legend style="text-align: center;">Core Banking Solutions</legend><br>
                      <div class="form-group">
                          <label>Username</label>

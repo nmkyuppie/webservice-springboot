@@ -10,21 +10,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "circle")
+@Entity(name = "block")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Circle implements Serializable {
+public class Block implements Serializable {
 
 	private static final long serialVersionUID = 7146274284775558256L;
 
 	@Id
-    @Column(name = "cId")
+    @Column(name = "bId")
     private Integer id;
 
-    @Column(name = "cDIstrictId")
-    private Integer districtId;
+    @Column(name = "bCircleId")
+    private Integer circleId;
 
-    @Column(name = "cName")
+    @Column(name = "bName")
     private String name;
 }

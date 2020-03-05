@@ -25,7 +25,7 @@ import com.cas.business.entity.Circle;
 import com.cas.business.entity.JewelLoan;
 import com.cas.business.entity.Society;
 import com.cas.business.entity.UserDetails;
-import com.cas.business.service.BranchService;
+import com.cas.business.service.SocietyService;
 import com.cas.business.service.HomeService;
 import com.cas.business.service.JewelLoanService;
 import com.cas.business.service.LoginService;
@@ -48,9 +48,6 @@ public class FrontController {
 
 	@Autowired
 	HomeService homeService;
-
-	@Autowired
-	BranchService branchService;
 
 	@Autowired
 	JewelLoanService jewelLoanService;
@@ -87,7 +84,8 @@ public class FrontController {
 			}
 			else {
 				session.setAttribute("userDetails", userDetails);
-				return new ModelAndView("redirect:/branch/list", model);
+//				return new ModelAndView("redirect:/society/list", model);
+				return new ModelAndView("redirect:/home", model);
 			}
 
 		}
@@ -100,42 +98,6 @@ public class FrontController {
 	@ModelAttribute("userDetails")
 	public UserDetails setUpUserForm() {
 		return null;
-	}
-
-	@GetMapping("/home")
-	public ModelAndView getHomePage() {
-		Map<String, Object> model = new HashMap<>();
-		List<Circle> circleList = homeService.getCircleList();
-		model.put("circleList", circleList);
-		return new ModelAndView("home", model);
-	}
-
-	@GetMapping("/branch/list")
-	public ModelAndView getBranchPage() {
-		Map<String, Object> model = new HashMap<>();
-		List<Society> societyList = branchService.findAll();
-		model.put("societyList", societyList);
-		return new ModelAndView("branch", model);
-	}
-
-	@GetMapping("/branch/add")
-	public ModelAndView getAddBranchPage(@ModelAttribute("society") Society society, BindingResult result, ModelMap model) {
-		return new ModelAndView("addbranch");
-	}
-
-	@PostMapping("/branch/edit")
-	public ModelAndView getEditBranchPage(@ModelAttribute("branchId") String branchId, BindingResult result, ModelMap model) {
-		Society society = branchService.findById(Integer.parseInt(branchId));
-		model.addAttribute("society", society);
-		return new ModelAndView("addbranch", model);
-	}
-
-	@PostMapping(value="/branch/add")
-	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
-	public String saveBranch(@ModelAttribute("society") Society society, BindingResult result, ModelMap model) {
-		branchService.save(society);
-		model.addAttribute("message", "Branch has been saved successfully.");
-		return "addbranch";
 	}
 
 	@GetMapping("/jewelloan/list")

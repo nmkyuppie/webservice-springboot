@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.cas.business.entity.Society;
 
 @Repository
-public interface BranchRepository extends JpaRepository<Society, Integer>{
+public interface SocietyRepository extends JpaRepository<Society, Integer>{
 	
-	List<Society> findByOrderByBranchIdAsc();
+	List<Society> findByOrderByIdAsc();
 
 }
