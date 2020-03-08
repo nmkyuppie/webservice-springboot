@@ -27,10 +27,6 @@ h2 {
   color: #cccccc;
 }
 
-
-
-/* STRUCTURE */
-
 .wrapper {
   display: flex;
   align-items: center;
@@ -172,11 +168,11 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
 }
 
 input[type=text], input[type=password] {
-  background-color: #f6f6f6;
+  background-color: #eee;
   border: none;
   color: #0d0d0d;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
@@ -346,6 +342,7 @@ input[type=text]:placeholder {
     background: #22fc7f;
     padding: 8px 11px;
     text-align: center;
+    box-shadow: -8px 0 0 #03a849 inset;
 }
 
 .navbar-brand-username{
@@ -407,15 +404,24 @@ a.navbar-brand-username:hover {
   	background-color: #00695C;
 }
 
-.jumbotron-table table thead tr th {
-	background-color: #004D40;
+.basicDetailsTable{
+	height: 300px;
+    overflow: auto;
+    padding: 0px;
+    margin-bottom: 0;
+}
+
+.basicDetailsTable thead tr th {
 	position: sticky;
 	z-index: 100;
 	top: -1px;
 }
 
-.btn-danger {
-    background-color: #004d40;
+.jumbotron-table table thead tr th {
+	background-color: #004D40;
+	position: sticky;
+	z-index: 100;
+	top: -1px;
 }
 
 .bigBadge {
@@ -446,6 +452,7 @@ a.navbar-brand-username:hover {
 select.form-control{
 	background: #eee;
 	border-radius: 3px;
+	font-size: 14px;
 }
 
 select.form-control option{
@@ -464,6 +471,7 @@ select.form-control option{
 .sidebar-sticky.active{
 	background-color: #004D40;
 	border-bottom: 1px solid #004d40;
+	box-shadow: 8px 0 0 #22fc7f inset;
 }
 
 #sideNavigation .fa{
@@ -471,20 +479,27 @@ select.form-control option{
 }
 
 .table {
-	background-color: #00796B !important;
-	font-size: 16px;
+	background-color: #004D40 !important;
+	font-size: 14px;
 }
 
 .table tr {
-	border-bottom: 1px solid #00695C !important;
+	border-bottom: 1px solid #004D40 !important;
 }
 
 .table tr:hover {
-    background-color: #00695C !important;
+    background-color: #004D40 !important;
     border : none;
 }
 
 .table tr td {
-	padding:12px;
+	padding:12px 12px 12px 0;
 	border:none;
+}
+
+.table thead th{
+	padding:12px 12px 12px 0;
+	box-shadow: 0px -8px 0px #04823a inset;
+    background: #004d40;
+    border: none;
 }

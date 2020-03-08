@@ -5,40 +5,25 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <!-- Required meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../static/css/datepicker.css">
-    <link rel="stylesheet" href="../static/css/styles.css">
-
-    <title>Society - Core Banking Solution</title>
-  </head>
- <body>
-        <%@ include file = "header.jsp" %>
-        <div class="container-fluid">
-            <div class="row justify-content-start" style="margin: 15px -15px;">
-            	<div class="col-2">
-            		<form action="/society/list" method="GET">
-            			<button type="submit" class="btn btn-default"><i class="fa fa-chevron-left" aria-hidden="true"></i> Society</button>
-            		</form>
-            	</div>
-            </div>
+        <div class="container-fluid" style="margin-top:0px;">
             <div class="row">
                 <div class="col-lg-12">
-                     <div class="jumbotron">
-                        <form:form method="POST" action="/society/add" modelAttribute="society">
+                     <div class="">
+                        <form:form method="${method }" action="${action }" modelAttribute="societyInfo">
                             <fieldset>
                             	<form:hidden class="form-control" name="id" path="id" value="" />
+                            	
+                                <div class="form-row"  style="margin: 15px -15px;">
+                                    <div class="col offset-md-6">
+                                		<button type="submit" class="btn btn-primary btn-action float-right" ><i class="${buttonIcon }" aria-hidden="true"></i> ${buttonText } Society</button>
+										<span class="badge badge-success  float-right">${message }</span>
+                                    </div>
+                                </div>
                                 <div class="form-row">
 	                                <div class="form-group col-sm-3">
 	                                    <label>Institution Name</label>
-	                                    <form:select class="form-control" name="instituition" path="instituition" >
+	                                    <form:select class="form-control" name="instituition" path="instituition"  disabled="${disabled}">
 	                                    	<form:option value="paccs">Paccs</form:option>
 	                                    	<form:option value="lamp">Lamp</form:option>
 	                                    	<form:option value="cms">CMS</form:option>
@@ -50,23 +35,23 @@
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Society Name</label>
-	                                    <form:input type="text" class="form-control" name="name" path="name" />
+	                                    <form:input type="text" class="form-control" name="name" path="name"  disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-2">
 	                                    <label>Registration Number</label>
-	                                    <form:input type="text" class="form-control"  name="registrationNumber" path="registrationNumber"/>
+	                                    <form:input type="text" class="form-control"  name="registrationNumber" path="registrationNumber" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-2">
 	                                    <label>Registration Date</label>
                                 		<div id="dordatepicker" class="input-group date" data-date-format="dd-mm-yyyy">
-    										<form:input class="form-control" type="text" readonly="readonly" name="registrationDate"  path="registrationDate"/>
+    										<form:input class="form-control" type="text" readonly="readonly" name="registrationDate"  path="registrationDate" disabled="${disabled}"/>
     										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 										</div>
 	                                </div>
 	                                <div class="form-group col-sm-2">
 	                                    <label>Starting Date</label>
                                 		<div id="dosdatepicker" class="input-group date" data-date-format="dd-mm-yyyy">
-    										<form:input class="form-control" type="text" readonly="readonly" name="startingDate"  path="startingDate"/>
+    										<form:input class="form-control" type="text" readonly="readonly" name="startingDate"  path="startingDate" disabled="${disabled}"/>
     										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 										</div>
 	                                </div>
@@ -74,69 +59,69 @@
                                 <div class="form-row">
 	                                <div class="form-group col-sm-3">
 	                                    <label>District</label>
-	                                    <form:select class="form-control" name="district" path="district" >
+	                                    <form:select class="form-control" name="district" path="district"  disabled="${disabled}">
 	                                    	<form:options items="${districtList}" itemValue="id" itemLabel="name"/>
 	                                    </form:select>  
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Circle</label>
-	                                    <form:select class="form-control" name="circle" path="circle" >
+	                                    <form:select class="form-control" name="circle" path="circle"  disabled="${disabled}">
 	                                    	<form:options items="${circleList}" itemValue="id" itemLabel="name"/>
 	                                    </form:select>  
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Block</label>
-	                                    <form:select class="form-control" name="block" path="block" >
+	                                    <form:select class="form-control" name="block" path="block"  disabled="${disabled}">
 	                                    	<form:options items="${blockList}" itemValue="id" itemLabel="name"/>
 	                                    </form:select>  
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Region</label>
-	                                    <form:input type="text" class="form-control" name="region" path="region"/>
+	                                    <form:input type="text" class="form-control" name="region" path="region" disabled="${disabled}"/>
 	                                </div>
                                 </div>
                                 <div class="form-row">
 	                                <div class="form-group col-sm-3">
 	                                    <label>Taluk</label>
-	                                    <form:input type="text" class="form-control" name="taluk" path="taluk"/>
+	                                    <form:input type="text" class="form-control" name="taluk" path="taluk" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Village</label>
-	                                    <form:input type="text" class="form-control" name="village" path="village"/>
+	                                    <form:input type="text" class="form-control" name="village" path="village" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Post</label>
-	                                    <form:input type="text" class="form-control" name="post" path="post"/>
+	                                    <form:input type="text" class="form-control" name="post" path="post" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>PIN Code</label>
-	                                    <form:input type="text" class="form-control" name="pinCode" path="pinCode"/>
+	                                    <form:input type="text" class="form-control" name="pinCode" path="pinCode" disabled="${disabled}"/>
 	                                </div>
                                 </div>
                                 <div class="form-row">
 	                                <div class="form-group col-sm-3">
 	                                    <label>Constitution Assembly</label>
-	                                    <form:input type="text" class="form-control"  name="constituition" path="constituition"/>
+	                                    <form:input type="text" class="form-control"  name="constituition" path="constituition" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Parliament</label>
-	                                    <form:input type="text" class="form-control"  name="parliament" path="parliament"/>
+	                                    <form:input type="text" class="form-control"  name="parliament" path="parliament" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Nearest Police Station</label>
-	                                    <form:input type="text" class="form-control"  name="policeStation"  path="policeStation"/>
+	                                    <form:input type="text" class="form-control"  name="policeStation"  path="policeStation" disabled="${disabled}"/>
 	                                </div>
                                     <div class="col-lg-1">
                                         <fieldset class="form-group">
 	                                    	<label>Building</label>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" value="own" name="building" path="building" />Own
+                                                	<form:radiobutton class="form-check-input" value="own" name="building" path="building"  disabled="${disabled}"/>Own
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" value="rent" name="building" path="building" />Rent
+                                                	<form:radiobutton class="form-check-input" value="rent" name="building" path="building"  disabled="${disabled}"/>Rent
                                                 </label>
                                             </div>
                                         </fieldset>
@@ -146,12 +131,12 @@
 	                                    	<label>Location</label>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" name="location" path="location" id="ruralLocation" value="rural" />Rural
+                                                	<form:radiobutton class="form-check-input" name="location" path="location" id="ruralLocation" value="rural"  disabled="${disabled}"/>Rural
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                             	<label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" name="location" path="location" id="urbanLocation" value="urban" />Urban
+                                                	<form:radiobutton class="form-check-input" name="location" path="location" id="urbanLocation" value="urban"  disabled="${disabled}"/>Urban
                                                 </label>
                                             </div>
                                         </fieldset>
@@ -161,12 +146,12 @@
 	                                    	<label>Shares</label>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" value="society" name="shares" path="shares" />Society
+                                                	<form:radiobutton class="form-check-input" value="society" name="shares" path="shares"  disabled="${disabled}"/>Society
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" value="government" name="shares" path="shares" />Government
+                                                	<form:radiobutton class="form-check-input" value="government" name="shares" path="shares"  disabled="${disabled}"/>Government
                                                 </label>
                                             </div>
                                         </fieldset>
@@ -175,25 +160,25 @@
                                 <div class="form-row">
 	                                <div class="form-group col-sm-3">
 	                                    <label>Area Sq. Ft.</label>
-	                                    <form:input type="text" class="form-control" name="areaSqFt" path="areaSqFt"/>
+	                                    <form:input type="text" class="form-control" name="areaSqFt" path="areaSqFt" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Chitta Number</label>
-	                                    <form:input type="text" class="form-control" name="chittaNumber" path="chittaNumber"/>
+	                                    <form:input type="text" class="form-control" name="chittaNumber" path="chittaNumber" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>Patta Number</label>
-	                                    <form:input type="text" class="form-control" name="pattaNumber" path="pattaNumber"/>
+	                                    <form:input type="text" class="form-control" name="pattaNumber" path="pattaNumber" disabled="${disabled}"/>
 	                                </div>
 	                                <div class="form-group col-sm-3">
 	                                    <label>PAN</label>
-	                                    <form:input type="text" class="form-control" name="pan" path="pan"/>
+	                                    <form:input type="text" class="form-control" name="pan" path="pan" disabled="${disabled}"/>
 	                                </div>
                                 </div>
                                 <div class="form-row">
 	                                <div class="form-group col-sm-3">
 	                                    <label>Marketing Business</label>
-	                                    <form:select class="form-control" name="marketingBusiness" path="marketingBusiness" >
+	                                    <form:select class="form-control" name="marketingBusiness" path="marketingBusiness"  disabled="${disabled}">
 	                                    	<form:option value="cotton">Cotton</form:option>
 	                                    	<form:option value="banana">Banana</form:option>
 	                                    	<form:option value="flower">Flower</form:option>
@@ -202,12 +187,19 @@
 	                                </div>
 	                                <div class="form-group col-sm-2">
 	                                    <label>Area Coverage</label>
-	                                    <input type="text" class="form-control" id="areaCoverageText"/>
+	                                    <c:if test = "${buttonText == 'Edit'}">
+	                                    	<input type="text" class="form-control" id="areaCoverageText" disabled/>
+	                                    </c:if>
+	                                    <c:if test = "${buttonText == 'Save'}">
+	                                    	<input type="text" class="form-control" id="areaCoverageText"/>
+	                                    </c:if>
 	                                </div>
-	                                <div class="form-group col-sm-1">
-	                                    <br>
-	                                    <button onclick="addAreaCoverage()" type="button" class="btn btn-primary btn-action" id="areaCoverageButton" style="margin-top: 4px; height: 39px; width: 100%;"><i class="fa fa-plus" aria-hidden="true"></i> </button>
-	                                </div>
+	                                <c:if test = "${buttonText == 'Save'}">
+		                                <div class="form-group col-sm-1">
+		                                    <br>
+		                                    <button onclick="addAreaCoverage()" type="button" class="btn btn-primary btn-action" id="areaCoverageButton" style="margin-top: 4px; height: 39px; width: 100%;"><i class="fa fa-plus" aria-hidden="true"></i> </button>
+		                                </div>
+	                                </c:if>
 	                                <div class="form-group col-sm-6">
 	                                <br/>
 	                                    <div id="areaHolder">
@@ -221,14 +213,9 @@
                                 </div>
                                 <div class="row">
 	                                <div class="form-group col-lg-6">
-	                                    <form:checkbox path="hasBranch"/> 
+	                                    <form:checkbox path="hasBranch" disabled="${disabled}"/> 
 	                                    <label>Has Branch?</label>
 	                                </div>
-                                    <div class="col-lg-6">
-                                		<button type="submit" class="btn btn-primary btn-action float-right" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-                                		<button type="reset" class="btn btn-default btn-action float-right" style="margin-right:15px;"><i class="fa fa-eraser" aria-hidden="true"></i> Clear</button>
-										<span class="badge badge-success  float-right">${message }</span>
-                                    </div>
                                 </div>
                             </fieldset>
                         </form:form>
@@ -236,24 +223,3 @@
                 </div>
             </div>
         </div>
-        <!-- Footer -->
-       <!--  <footer class="page-footer font-small blue">
-
-        Copyright
-        <div class="footer-copyright text-center py-3">&#9400; 2019 Copyright:
-          <a href="#"> Society Bank</a>
-        </div>
-        Copyright
-      
-      </footer> -->
-      <!-- Footer -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://use.fontawesome.com/1a055a024c.js"></script>
-    <script src="../static/js/main.js"></script>
-    <script src="../static/js/bootstrap-datepicker.js"></script>
-  </body>
-</html>

@@ -6,11 +6,13 @@ $(document).ready(function () {
         $(this).parent().children('ul.tree').toggle(300);
     });
     $(".jumbotron-table").css("height", window.innerHeight-headerHeight - 10+"px");
+    $(".basicDetailsTable").css("height", window.innerHeight-headerHeight - 50 +"px");
     $("#districtList").css("height", window.innerHeight - headerHeight - 10 +"px");
     $("#blockList").css("height", window.innerHeight - headerHeight - 10 +"px");
     $("#sideNavigation").css("height", window.innerHeight - headerHeight + 29 +"px");
     $( window ).resize(function() {
     	$(".jumbotron-table").css("height", window.innerHeight-headerHeight - 10+"px");
+    	$(".basicDetailsTable").css("height", window.innerHeight-headerHeight - 50 +"px");
         $("#districtList").css("height", window.innerHeight - headerHeight - 10 +"px");
         $("#blockList").css("height", window.innerHeight - headerHeight - 10 +"px");
         $("#sideNavigation").css("height", window.innerHeight - headerHeight + 29 +"px");
@@ -22,7 +24,21 @@ $("#districtList li" ).on( "click", function() {
 	$(this).addClass("active");
 });
 
-$("#areaCoverageButton" ).on( "click", function() {
+var numberOnly = function (obj) {
+	$(obj).removeClass("is-invalid");
+	$(obj).removeClass("is-valid");
+	var value = $(obj).val();
+	if(isNaN(value)){
+		$(obj).addClass("is-invalid");
+		$(obj).val('');
+	}
+	else{
+		if(value.length == 4)
+			$(obj).addClass("is-valid");
+	}
+}
+
+var addAreaCoverage = function() {
 	var areaCoverageText = $('#areaCoverageText').val();
 	if(areaCoverageText.trim() === ""){
 		$("#areaCoverageText").addClass("is-invalid");
@@ -40,7 +56,7 @@ $("#areaCoverageButton" ).on( "click", function() {
 	}
 	$('#areaCoverageText').val('');
 	$('#areaCoverageText').focus();
-});
+}
 
 var removeArea = function(obj) {
 	var areaCoverageText = $(obj).attr("data");
@@ -59,7 +75,7 @@ $(function () {
 	  }).datepicker('update', new Date());
 });
 
-$(function() {
+/*$(function() {
     $('a[href*=#]:not([href=#])').click(function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
             var target = $(this.hash);
@@ -72,4 +88,4 @@ $(function() {
             }
         }
     });
-});
+});*/

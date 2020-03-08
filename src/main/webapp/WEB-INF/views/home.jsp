@@ -113,8 +113,8 @@
 								<c:forEach items="${societyList}" var="society">
 									<tr>
 										<td width="5%">
-						            		<form action="/society/basicDetails" method="GET">
-						            			<input type="hidden" value="${society.id}" name="id">
+						            		<form action="/society/info" method="GET">
+						            			<input type="hidden" value="${society.registrationNumber}" name="regno">
 						            			<button type="submit" class="btn btn-primary float-right"><i class="fa fa-eye" aria-hidden="true"></i></button>
 						            		</form>
 										</td>

@@ -1,3 +1,4 @@
+<%@page import="com.cas.business.entity.Society"%>
 <%@page import="com.cas.business.entity.Circle"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -21,10 +22,19 @@
   </head>
  <body>
         <%@ include file = "header.jsp" %>
+		<% 
+		Society society = (Society)session.getAttribute("societyInfo");
+		String societyName = society.getName();
+		String societyRegNumber = society.getRegistrationNumber();
+		%>
+		
 		<div class="container-fluid" style="margin-top:40px;">
             <div class="row justify-content-end" style="margin: 0 -15px;">
             	<div class="col-md-6" style="padding:0">
-            		<span class="bigBadge badge">C2498 Palnangkuppam</span>
+            		<span class="bigBadge badge">
+            			<i class="fa fa-building" aria-hidden="true"></i>&nbsp;
+            			<%=societyRegNumber + " "+ societyName %>
+            		</span>
             	</div>
             </div>
 			<div class="row" >
@@ -32,9 +42,9 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${SOCIETY_DETAILS_M} " href="/society/info?regno=<%=societyRegNumber%>">
 									<i class="fa fa-bank" aria-hidden="true"></i>&nbsp;
-									Soceity Details
+									Society Details
 								</a>
 							</li>
 						</ul>
@@ -42,7 +52,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky active" href="#">
+								<a class="nav-link sidebar-sticky ${MEMBERS_M}" href="/member/list">
 									<i class="fa fa-braille" aria-hidden="true"></i>&nbsp;
 									Members
 								</a>
@@ -52,7 +62,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${SHARES_M}" href="#">
 									<i class="fa fa-database" aria-hidden="true"></i>&nbsp;
 									Shares
 								</a>
@@ -62,7 +72,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${SOCIETY_EMPLOYEE_DETAILS_M}" href="#">
 									<i class="fa fa-users" aria-hidden="true"></i>&nbsp;
 									Society Employee Details
 								</a>
@@ -72,7 +82,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${PDS_EMPLOYEE_DETAILS_M}" href="#">
 									<i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;
 									PDS Employee Details
 								</a>
@@ -82,7 +92,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${RETIREMENT_DETAILS_M}" href="#">
 									<i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;
 									Retirement Details
 								</a>
@@ -92,7 +102,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${AUDIT_DETAILS_M}" href="#">
 									<i class="fa fa-balance-scale" aria-hidden="true"></i>&nbsp;
 									Audit Details
 								</a>
@@ -102,7 +112,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${BOARD_DETAILS_M}" href="#">
 									<i class="fa fa-handshake-o" aria-hidden="true"></i>&nbsp;
 									Board Details
 								</a>
@@ -112,7 +122,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${DEPUTATION_DETAILS_M}" href="#">
 									<i class="fa fa-support" aria-hidden="true"></i>&nbsp;
 									Deputation Details
 								</a>
@@ -122,7 +132,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${PETITION_DETAILS_M}" href="#">
 									<i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;
 									Petition Details
 								</a>
@@ -132,7 +142,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${BONUS_DETAILS_M}" href="#">
 									<i class="fa fa-inr" aria-hidden="true"></i>&nbsp;
 									Bonus Details
 								</a>
@@ -142,7 +152,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky" href="#">
+								<a class="nav-link sidebar-sticky ${PROMOTION_DETAILS_M}" href="#">
 									<i class="fa fa-gift" aria-hidden="true"></i>&nbsp;
 									Promotion Details
 								</a>
@@ -150,7 +160,9 @@
 						</ul>
 					</div>
 				</nav>
-				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 shadow" style="background:#004D40;">
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 shadow" style="background:#004D40;">
+<!-- 				 px-4 -->
+					<jsp:include page="${pageName}.jsp" />
 				</main>
 			</div>
 		</div>

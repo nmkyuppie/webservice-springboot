@@ -11,5 +11,7 @@ import com.cas.business.entity.Society;
 public interface SocietyRepository extends JpaRepository<Society, Integer>{
 	
 	List<Society> findByOrderByIdAsc();
-
+	
+	Society findByRegistrationNumber(String registrationNumber);
+	
 }
