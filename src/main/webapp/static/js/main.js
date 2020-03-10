@@ -9,12 +9,14 @@ $(document).ready(function () {
     $(".basicDetailsTable").css("height", window.innerHeight-headerHeight - 50 +"px");
     $("#districtList").css("height", window.innerHeight - headerHeight - 10 +"px");
     $("#blockList").css("height", window.innerHeight - headerHeight - 10 +"px");
+    $("#societyList").css("height", window.innerHeight - headerHeight - 10 +"px");
     $("#sideNavigation").css("height", window.innerHeight - headerHeight + 29 +"px");
     $( window ).resize(function() {
     	$(".jumbotron-table").css("height", window.innerHeight-headerHeight - 10+"px");
     	$(".basicDetailsTable").css("height", window.innerHeight-headerHeight - 50 +"px");
         $("#districtList").css("height", window.innerHeight - headerHeight - 10 +"px");
         $("#blockList").css("height", window.innerHeight - headerHeight - 10 +"px");
+        $("#societyList").css("height", window.innerHeight - headerHeight - 10 +"px");
         $("#sideNavigation").css("height", window.innerHeight - headerHeight + 29 +"px");
     });
 });

@@ -1,3 +1,4 @@
+<%@page import="com.cas.business.entity.Society"%>
 <%@page import="com.cas.business.entity.Block"%>
 <%@page import="com.cas.business.entity.District"%>
 <%@page import="com.cas.business.entity.Circle"%>
@@ -92,41 +93,24 @@
                     			<%
                     		}
                     	%>
-                    		<%=b.getName()%>
+                    		<%=b.getName()%></li>
                     	<% } %>
                     </ul>
                     
                 </div>
                 <div class="col-lg-3">
                 	<span class="badge">Society</span>
-                     <div class="jumbotron jumbotron-table">
-                        <table class="table table-sm">
-							<!-- <thead>
-								<tr>
-									<th width="5%"></th>
-									<th scope="col">#</th>
-									<th scope="col">Society Name</th>
-									<th scope="col">Registration Number</th>
-								</tr>
-							</thead> -->
-							<tbody>
-								<c:forEach items="${societyList}" var="society">
-									<tr>
-										<td width="5%">
-						            		<form action="/society/info" method="GET">
-						            			<input type="hidden" value="${society.registrationNumber}" name="regno">
-						            			<button type="submit" class="btn btn-primary float-right"><i class="fa fa-eye" aria-hidden="true"></i></button>
-						            		</form>
-										</td>
-<%-- 										<td>${society.branchId}</td> --%>
-										<td>${society.name}</td>
-<%-- 										<td>${society.registrationNumber}</td> --%>
-									</tr>
-								</c:forEach>
-							</tbody>
-					</table>
-                     
-                </div>
+                	<ul class="list-group shadow" id ="societyList" style="overflow:auto;">
+						<c:forEach items="${societyList}" var="society">
+                    		<li class="list-group-item d-flex align-items-center">
+                    		<form action="/society/info" method="GET" style="margin-right:15px;">
+		            			<input type="hidden" value="${society.registrationNumber}" name="regno">
+		            			<button type="submit" class="btn btn-primary float-right"><i class="fa fa-eye" aria-hidden="true"></i></button>
+		            		</form>
+		            		${society.registrationNumber} &nbsp;&nbsp; ${society.name}
+		            		</li>
+		            	</c:forEach>
+                    </ul>
             </div>
         </div>
         <!-- Footer -->

@@ -493,12 +493,20 @@ select.form-control option{
 }
 
 .table tr td {
-	padding:12px 12px 12px 0;
+	padding:12px;
 	border:none;
 }
 
+.table tr:nth-child(odd) {
+	background: #484747;
+}
+
+.table tr:nth-child(even) {
+	background: #424141;
+}
+
 .table thead th{
-	padding:12px 12px 12px 0;
+	padding:12px;
 	box-shadow: 0px -8px 0px #04823a inset;
     background: #004d40;
     border: none;

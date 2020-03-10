@@ -6,7 +6,7 @@
 <body>
 <div class="row" style="padding:15px 0;">
 	     <div class="col-lg-12" style="font-size:14px;">
-	             <form:form method="POST" action="/member/add" modelAttribute="member">
+	             <form:form method="POST" action="/shares/add" modelAttribute="shares">
 	                 <fieldset>
 	                 	<form:hidden class="form-control" name="id" path="id" value="" />
 	                     
@@ -23,25 +23,14 @@
 		                      </div>
 		                      <div class="row" style="padding:10px;">
 		                          <div class="col-sm-2">
-		                          	<label class="col-form-label">Class </label>
+		                          	<label class="col-form-label">Type </label>
 		                          </div>
 		                          <div class="col-sm-4">
-		                          	<form:select class="form-control" name="memberClass" path="memberClass" >
-			                          	<form:option value="A Class" selected="selected">A Class</form:option>
-			                          	<form:option value="B Class">B Class</form:option>
-			                          	<form:option value="SC">SC</form:option>
-			                          	<form:option value="ST">ST</form:option>
-			                          	<form:option value="Women">Women</form:option>
+		                          	<form:select class="form-control" name="type" path="type" >
+			                          	<form:option value="Government">Government</form:option>
+			                          	<form:option value="Society">Society</form:option>
 			                        </form:select> 
 		                          </div>
-		                      </div>
-		                      <div class="row" style="padding:10px;">
-		                          <div class="col-sm-2">
-		                          	<label class="col-form-label">Member Count</label>
-		                          </div>
-		                          <div class="col-sm-4">
-			                          <form:input type="text" class="form-control" name="count" path="count" required="required"  />
-			                      </div>
 		                      </div>
 		                      <div class="row" style="padding:10px;">
 		                          <div class="col-sm-2">
@@ -53,7 +42,7 @@
 		                      </div>
 	                          <div class="row" style="padding:10px;">
 		                         <div class="col-sm-6">
-		                      		<button type="submit" class="btn btn-primary btn-action float-right" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Member</button>
+		                      		<button type="submit" class="btn btn-primary btn-action float-right" ><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Shares</button>
 		                      		<button type="reset" class="btn btn-default btn-action float-right" style="margin-right:15px;"><i class="fa fa-eraser" aria-hidden="true"></i> Clear</button>
 									<span class="badge badge-success  float-right">${message }</span>
 								</div>

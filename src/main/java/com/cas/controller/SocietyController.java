@@ -106,6 +106,7 @@ public class SocietyController {
 		model.put("buttonText", "Edit");
 		model.put("areaCoverage", society.getAreaCoverage());
 		model.put("societyInfo", society);
+		log.info("kirti"+society);
 		session.setAttribute("societyInfo", society);
 		return new ModelAndView("basicdetails", model);
 	}
@@ -141,6 +142,7 @@ public class SocietyController {
 		model.put("buttonText", "Edit");
 		model.put("areaCoverage", society.getAreaCoverage());
 		model.put("societyInfo", society);
+		log.info("kirti"+society);
 		session.setAttribute("societyInfo", society);
 		return new ModelAndView("basicdetails", model);
 	}

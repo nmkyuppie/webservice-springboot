@@ -111,7 +111,51 @@
 	                                    <label>Nearest Police Station</label>
 	                                    <form:input type="text" class="form-control"  name="policeStation"  path="policeStation" disabled="${disabled}"/>
 	                                </div>
-                                    <div class="col-lg-1">
+                                    <div class="form-group col-sm-3">
+	                                    <label>Marketing Business</label>
+	                                    <form:select class="form-control" name="marketingBusiness" path="marketingBusiness"  disabled="${disabled}">
+	                                    	<form:option value="cotton">Cotton</form:option>
+	                                    	<form:option value="banana">Banana</form:option>
+	                                    	<form:option value="flower">Flower</form:option>
+	                                    	<form:option value="other">Other</form:option>
+	                                    </form:select>  
+	                                </div>
+                                    <%-- <div class="col-lg-1">
+                                        <fieldset class="form-group">
+	                                    	<label>Shares</label>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                	<form:radiobutton class="form-check-input" value="society" name="shares" path="shares"  disabled="${disabled}"/>Society
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                	<form:radiobutton class="form-check-input" value="government" name="shares" path="shares"  disabled="${disabled}"/>Government
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                    </div> --%>
+                                </div>
+                                <div class="form-row">
+	                                <div class="form-group col-sm-3">
+	                                    <label>Area Sq. Ft.</label>
+	                                    <form:input type="text" class="form-control" name="areaSqFt" path="areaSqFt" disabled="${disabled}"/>
+	                                </div>
+	                                <div class="form-group col-sm-3">
+	                                    <label>Chitta Number</label>
+	                                    <form:input type="text" class="form-control" name="chittaNumber" path="chittaNumber" disabled="${disabled}"/>
+	                                </div>
+	                                <div class="form-group col-sm-3">
+	                                    <label>Patta Number</label>
+	                                    <form:input type="text" class="form-control" name="pattaNumber" path="pattaNumber" disabled="${disabled}"/>
+	                                </div>
+	                                <div class="form-group col-sm-3">
+	                                    <label>PAN</label>
+	                                    <form:input type="text" class="form-control" name="pan" path="pan" disabled="${disabled}"/>
+	                                </div>
+                                </div>
+                                <div class="form-row">
+                                	<div class="col-lg-1">
                                         <fieldset class="form-group">
 	                                    	<label>Building</label>
                                             <div class="form-check">
@@ -141,50 +185,6 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-lg-1">
-                                        <fieldset class="form-group">
-	                                    	<label>Shares</label>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" value="society" name="shares" path="shares"  disabled="${disabled}"/>Society
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                	<form:radiobutton class="form-check-input" value="government" name="shares" path="shares"  disabled="${disabled}"/>Government
-                                                </label>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-	                                <div class="form-group col-sm-3">
-	                                    <label>Area Sq. Ft.</label>
-	                                    <form:input type="text" class="form-control" name="areaSqFt" path="areaSqFt" disabled="${disabled}"/>
-	                                </div>
-	                                <div class="form-group col-sm-3">
-	                                    <label>Chitta Number</label>
-	                                    <form:input type="text" class="form-control" name="chittaNumber" path="chittaNumber" disabled="${disabled}"/>
-	                                </div>
-	                                <div class="form-group col-sm-3">
-	                                    <label>Patta Number</label>
-	                                    <form:input type="text" class="form-control" name="pattaNumber" path="pattaNumber" disabled="${disabled}"/>
-	                                </div>
-	                                <div class="form-group col-sm-3">
-	                                    <label>PAN</label>
-	                                    <form:input type="text" class="form-control" name="pan" path="pan" disabled="${disabled}"/>
-	                                </div>
-                                </div>
-                                <div class="form-row">
-	                                <div class="form-group col-sm-3">
-	                                    <label>Marketing Business</label>
-	                                    <form:select class="form-control" name="marketingBusiness" path="marketingBusiness"  disabled="${disabled}">
-	                                    	<form:option value="cotton">Cotton</form:option>
-	                                    	<form:option value="banana">Banana</form:option>
-	                                    	<form:option value="flower">Flower</form:option>
-	                                    	<form:option value="other">Other</form:option>
-	                                    </form:select>  
-	                                </div>
 	                                <div class="form-group col-sm-2">
 	                                    <label>Area Coverage</label>
 	                                    <c:if test = "${buttonText == 'Edit'}">

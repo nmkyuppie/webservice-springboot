@@ -62,7 +62,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky ${SHARES_M}" href="#">
+								<a class="nav-link sidebar-sticky ${SHARES_M}" href="/shares/list">
 									<i class="fa fa-database" aria-hidden="true"></i>&nbsp;
 									Shares
 								</a>

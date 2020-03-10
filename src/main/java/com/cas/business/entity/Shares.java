@@ -12,34 +12,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "member")
+@Entity(name = "shares")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member implements Serializable {
+public class Shares implements Serializable {
 
 	private static final long serialVersionUID = 7146274284775558256L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "mId")
+	@Column(name = "shId")
     private Integer id;
 
-    @Column(name = "mSocietyId")
+	@Column(name = "shSocietyId")
     private Integer societyId;
 
-    @Column(name = "mClass")
-    private String memberClass;
-
-    @Column(name = "mYearStart")
+    @Column(name = "shYearStart")
     private Integer yearStart;
 
-    @Column(name = "mYearEnd")
+    @Column(name = "shYearEnd")
     private Integer yearEnd;
 
-    @Column(name = "mCount")
-    private Integer count;
+    @Column(name= "shType")
+    private String type;
 
-    @Column(name = "mAmount")
+    @Column(name = "shAmount")
     private Double amount;
+
 }

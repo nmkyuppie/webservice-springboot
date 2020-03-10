@@ -8,8 +8,8 @@
 
     <div class="row justify-content-end" style="margin: 15px -15px;">
     	<div class="col offset-md-6">
-    		<form action="/member/add" method="GET">
-    			<button type="submit" class="btn btn-primary float-right"><i class="fa fa-plus" aria-hidden="true"></i> Add Member</button>
+    		<form action="/shares/add" method="GET">
+    			<button type="submit" class="btn btn-primary float-right"><i class="fa fa-plus" aria-hidden="true"></i> Add Shares</button>
     		</form>
     	</div>
     </div>
@@ -24,45 +24,43 @@
 							<th width="5%"></th>
 							<th width="2%"></th>
 							<th scope="col" width="5%">#</th>
-							<th scope="col" width="14%">Member Class</th>
 							<th scope="col" width="14%">Year</th>
-							<th scope="col" width="14%">Member Count</th>
+							<th scope="col" width="14%">Share Type</th>
 							<th scope="col" width="40%">Total Amount</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${memberList}" var="m">
+						<c:forEach items="${sharesList}" var="sh">
 							<tr>
 								<td>
-									<form action="/member/edit" method="POST">
-										<input type="hidden" value="${m.id}" name="id">
+									<form action="/shares/edit" method="POST">
+										<input type="hidden" value="${sh.id}" name="id">
 										<button type="submit" class="btn btn-primary float-right" title="Edit Details">
 											<i class="fa fa-pencil" aria-hidden="true"></i>
 										</button>
 									</form>
 								</td>
 								<td>
-									<form action="/member/history" method="POST">
-										<input type="hidden" value="${m.id}" name="id">
+									<form action="/shares/history" method="POST">
+										<input type="hidden" value="${sh.id}" name="id">
 										<button type="submit" class="btn btn-primary float-right" title="Show History">
 											<i class="fa fa-clock-o" aria-hidden="true"></i>
 										</button>
 									</form>
 								</td>
 								<td>
-									<form action="/member/delete" method="POST">
-										<input type="hidden" value="${m.id}" name="id">
+									<form action="/shares/delete" method="POST">
+										<input type="hidden" value="${sh.id}" name="id">
 										<button type="submit" class="btn btn-danger float-right" title="Delete Record">
 											<i class="fa fa-trash" aria-hidden="true"></i>
 										</button>
 									</form>
 								</td>
 								<td></td>
-								<td>${m.id}</td>
-								<td>${m.memberClass}</td>
-								<td>${m.yearStart} - ${m.yearEnd}</td>
-								<td>${m.count}</td>
-								<td>${m.amount}</td>
+								<td>${sh.id}</td>
+								<td>${sh.yearStart} - ${sh.yearEnd}</td>
+								<td>${sh.type}</td>
+								<td>${sh.amount}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
