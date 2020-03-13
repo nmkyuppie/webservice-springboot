@@ -72,7 +72,7 @@
 					<div>
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky ${SOCIETY_EMPLOYEE_DETAILS_M}" href="#">
+								<a class="nav-link sidebar-sticky ${SOCIETY_EMPLOYEE_DETAILS_M}" href="/societyEmployee/list">
 									<i class="fa fa-users" aria-hidden="true"></i>&nbsp;
 									Society Employee Details
 								</a>

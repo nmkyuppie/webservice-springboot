@@ -75,6 +75,10 @@ $(function () {
 	        autoclose: true, 
 	        todayHighlight: true
 	  }).datepicker('update', new Date());
+	  $(".date").datepicker({ 
+	        autoclose: true, 
+	        todayHighlight: true
+	  }).datepicker('update', new Date());
 });
 
 /*$(function() {

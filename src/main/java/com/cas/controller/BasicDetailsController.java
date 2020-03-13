@@ -21,22 +21,34 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cas.business.entity.Member;
 import com.cas.business.entity.MemberHistory;
 import com.cas.business.entity.Shares;
+import com.cas.business.entity.SharesHistory;
 import com.cas.business.entity.Society;
+import com.cas.business.entity.SocietyEmployee;
+import com.cas.business.entity.SocietyEmployeeHistory;
 import com.cas.business.entity.UserDetails;
 import com.cas.business.repository.MemberHistoryRepository;
 import com.cas.business.repository.MemberRepository;
+import com.cas.business.repository.SharesHistoryRepository;
 import com.cas.business.repository.SharesRepository;
+import com.cas.business.repository.SocietyEmployeeHistoryRepository;
+import com.cas.business.repository.SocietyEmployeeRepository;
 import com.cas.business.repository.SocietyRepository;
 import com.cas.utils.Utils.Menu;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @SessionAttributes({"userDetails","societyInfo"})
+@Slf4j
 public class BasicDetailsController {
 
 	@Autowired SocietyRepository societyRepository;
 	@Autowired MemberRepository memberRepository;
 	@Autowired MemberHistoryRepository memberHistoryRepository;
 	@Autowired SharesRepository sharesRepository;
+	@Autowired SharesHistoryRepository sharesHistoryRepository;
+	@Autowired SocietyEmployeeRepository societyEmployeeRepository;
+	@Autowired SocietyEmployeeHistoryRepository societyEmployeeHistoryRepository;
 
 	@GetMapping("/member/list")
 	public ModelAndView getMemberPage() {
@@ -130,7 +142,7 @@ public class BasicDetailsController {
 			BindingResult result, ModelMap model) {
 		shares.setSocietyId(society.getId());
 		shares = sharesRepository.save(shares);
-//		memberHistoryRepository.save(MemberHistory.setUpObject(shares, userDetails.getLoginId()));
+		sharesHistoryRepository.save(SharesHistory.setUpObject(shares, userDetails.getLoginId()));
 		model.addAttribute("message", "Shares has been saved successfully.");
 		model.put("pageName", "addshares");
 		model.put(Menu.SHARES_M.toString(), "active");
@@ -144,7 +156,7 @@ public class BasicDetailsController {
 			@SessionAttribute("societyInfo") Society society, 
 			@ModelAttribute("id") Integer sharesId, 
 			BindingResult result, ModelMap model) {
-//		memberHistoryRepository.save(MemberHistory.setUpObject(memberRepository.findById(memberId).get(), userDetails.getLoginId()));
+		sharesHistoryRepository.save(SharesHistory.setUpObject(sharesRepository.findById(sharesId).get(), userDetails.getLoginId()));
 		sharesRepository.deleteById(sharesId);
 		model.addAttribute("message", "Shares has been deleted successfully.");
 		return getSharesPage();
@@ -158,6 +170,50 @@ public class BasicDetailsController {
 		model.put(Menu.SHARES_M.toString(), "active");
 		model.put("shares", shares);
 		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping("/shares/history")
+	public ModelAndView getSharesHistoryPage(@ModelAttribute("id") Integer sharesId) {
+		Map<String, Object> model = new HashMap<>();
+		List<SharesHistory> sharesHistoryList = sharesHistoryRepository.findBySharesIdOrderByUpdatedOnDesc(sharesId);
+		model.put("sharesHistoryList", sharesHistoryList);
+		model.put("pageName", "shareshistory");
+		model.put(Menu.SHARES_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@GetMapping("/societyEmployee/list")
+	public ModelAndView getSocietyEmployeePage() {
+		Map<String, Object> model = new HashMap<>();
+		List<SocietyEmployee> societyEmployeeList = societyEmployeeRepository.findAll();
+		log.info("Mani {}",societyEmployeeList);
+		model.put("societyEmployeeList", societyEmployeeList);
+		model.put("pageName", "societyemployee");
+		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@GetMapping("/societyEmployee/add")
+	public ModelAndView getAddSocietyEmployeePage(@ModelAttribute("societyEmployee") SocietyEmployee societyEmployee, BindingResult result, ModelMap model) {
+		model.put("pageName", "addsocietyemployee");
+		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/societyEmployee/add")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String saveSocietyEmployee(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("societyEmployee") SocietyEmployee societyEmployee, 
+			BindingResult result, ModelMap model) {
+		societyEmployee.setSocietyId(society.getId());
+		societyEmployee = societyEmployeeRepository.save(societyEmployee);
+//		sharesHistoryRepository.save(SharesHistory.setUpObject(shares, userDetails.getLoginId()));
+		model.addAttribute("message", "Society employee has been saved successfully.");
+		model.put("pageName", "addsocietyemployee");
+		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
+		return "basicdetails";
 	}
 	
 }
