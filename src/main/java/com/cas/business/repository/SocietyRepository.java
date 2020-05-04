@@ -12,6 +12,8 @@ public interface SocietyRepository extends JpaRepository<Society, Integer>{
 	
 	List<Society> findByOrderByIdAsc();
 	
+	List<Society> findByDistrictAndCircleAndBlockOrderByIdAsc(Integer district, Integer circle, Integer block);
+	
 	Society findByRegistrationNumber(String registrationNumber);
 	
 }

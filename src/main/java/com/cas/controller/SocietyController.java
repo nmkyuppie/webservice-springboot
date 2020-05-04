@@ -23,15 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cas.business.entity.Block;
 import com.cas.business.entity.Circle;
 import com.cas.business.entity.District;
-import com.cas.business.entity.Member;
 import com.cas.business.entity.Society;
-import com.cas.business.entity.UserDetails;
 import com.cas.business.repository.BlockRepository;
 import com.cas.business.repository.CircleRepository;
 import com.cas.business.repository.DistrictRepository;
 import com.cas.business.repository.SocietyRepository;
 import com.cas.business.service.SocietyService;
-import com.cas.utils.Utils;
 import com.cas.utils.Utils.Menu;
 
 import lombok.extern.slf4j.Slf4j;

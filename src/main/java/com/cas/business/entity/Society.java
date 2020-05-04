@@ -45,7 +45,7 @@ public class Society implements Serializable {
     private String startingDate;
 
     @Column(name = "sCircle")
-    private String circle;
+    private Integer circle;
 
     @Column(name = "sRegion")
     private String region;
@@ -60,13 +60,13 @@ public class Society implements Serializable {
     private String taluk;
 
     @Column(name = "sDistrict")
-    private String district;
+    private Integer district;
 
     @Column(name = "sPinCode")
     private String pinCode;
 
     @Column(name = "sBlock")
-    private String block;
+    private Integer block;
 
     @Column(name = "sConstituition")
     private String constituition;
@@ -107,5 +107,20 @@ public class Society implements Serializable {
     
     @Column(name = "sHasBranch")
     private Boolean hasBranch;
+    
+    @Column(name = "sTinNumber")
+    private String tinNumber;
+    
+    @Column(name = "sSurveyNumber")
+    private String surveyNumber;
+    
+    @Column(name = "sSocietyClass")
+    private String societyClass;
+    
+    @Column(name = "sClassYearStart")
+    private Integer classYearStart;
+    
+    @Column(name = "sClassYearEnd")
+    private Integer classYearEnd;
 
 }

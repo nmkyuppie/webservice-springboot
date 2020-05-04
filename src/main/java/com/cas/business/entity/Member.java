@@ -1,6 +1,7 @@
 package com.cas.business.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,5 +42,5 @@ public class Member implements Serializable {
     private Integer count;
 
     @Column(name = "mAmount")
-    private Double amount;
+    private BigDecimal amount;
 }

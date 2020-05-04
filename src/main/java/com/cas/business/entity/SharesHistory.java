@@ -1,6 +1,7 @@
 package com.cas.business.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -44,7 +45,7 @@ public class SharesHistory implements Serializable {
     private String type;
 
     @Column(name = "shhAmount")
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(name = "shhUpdatedBy")
     private Integer updatedBy;

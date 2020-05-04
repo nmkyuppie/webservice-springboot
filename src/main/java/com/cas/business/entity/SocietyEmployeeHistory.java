@@ -80,4 +80,25 @@ public class SocietyEmployeeHistory implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedOn;
 
+	public static SocietyEmployeeHistory setUpObject(SocietyEmployee se, Integer loginId) {
+		SocietyEmployeeHistory seh = new SocietyEmployeeHistory();
+		seh.setSocietyId(se.getSocietyId());
+		seh.setSocietyEmployeeId(se.getId());
+		seh.setName(se.getName());
+		seh.setQualification(se.getQualification());
+		seh.setGender(se.getGender());
+		seh.setDob(se.getDob());
+		seh.setCadre(se.getCadre());
+		seh.setJoiningDate(se.getJoiningDate());
+		seh.setRetirementDate(se.getRetirementDate());
+		seh.setAddress(se.getAddress());
+		seh.setAppointedBy(se.getAppointedBy());
+		seh.setMobileNumber(se.getMobileNumber());
+		seh.setEmailId(se.getEmailId());
+		seh.setIsDisabledPerson(se.getIsDisabledPerson());
+		seh.setPan(se.getPan());
+		seh.setUpdatedBy(loginId);
+		return seh;
+	}
+
 }

@@ -21,16 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cas.business.entity.Circle;
 import com.cas.business.entity.JewelLoan;
-import com.cas.business.entity.Society;
 import com.cas.business.entity.UserDetails;
-import com.cas.business.service.SocietyService;
 import com.cas.business.service.HomeService;
 import com.cas.business.service.JewelLoanService;
 import com.cas.business.service.LoginService;
 
-import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -39,7 +35,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
-@Slf4j
 @SessionAttributes("userDetails")
 public class FrontController {	
 

@@ -1,6 +1,7 @@
 package com.cas.business.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +39,6 @@ public class Shares implements Serializable {
     private String type;
 
     @Column(name = "shAmount")
-    private Double amount;
+    private BigDecimal amount;
 
 }

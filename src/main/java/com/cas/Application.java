@@ -1,6 +1,5 @@
 package com.cas;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -22,7 +21,7 @@ public class Application  extends SpringBootServletInitializer{
 
     @Bean
     public FilterRegistrationBean<URLFilter> filterRegistrationBean() {
-        FilterRegistrationBean<URLFilter> registrationBean = new FilterRegistrationBean();
+        FilterRegistrationBean<URLFilter> registrationBean = new FilterRegistrationBean<URLFilter>();
         URLFilter customURLFilter = new URLFilter();
 
         registrationBean.setFilter(customURLFilter);

@@ -10,5 +10,5 @@ import com.cas.business.entity.SocietyEmployee;
 @Repository
 public interface SocietyEmployeeRepository extends JpaRepository<SocietyEmployee, Integer>{
 
-	List<SocietyEmployee> findAll();
+	List<SocietyEmployee> findAllByOrderByName();
 }
