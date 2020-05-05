@@ -32,9 +32,13 @@ import com.cas.business.entity.BoardDetails;
 import com.cas.business.entity.BoardDetailsHistory;
 import com.cas.business.entity.BonusDetails;
 import com.cas.business.entity.BonusDetailsHistory;
+import com.cas.business.entity.CourtCase;
+import com.cas.business.entity.CourtCaseHistory;
 import com.cas.business.entity.Deputation;
 import com.cas.business.entity.DeputationHistory;
 import com.cas.business.entity.Document;
+import com.cas.business.entity.Enquiry;
+import com.cas.business.entity.EnquiryHistory;
 import com.cas.business.entity.Inspection;
 import com.cas.business.entity.InspectionHistory;
 import com.cas.business.entity.Member;
@@ -59,9 +63,13 @@ import com.cas.business.repository.BoardDetailsHistoryRepository;
 import com.cas.business.repository.BoardDetailsRepository;
 import com.cas.business.repository.BonusDetailsHistoryRepository;
 import com.cas.business.repository.BonusDetailsRepository;
+import com.cas.business.repository.CourtCaseHistoryRepository;
+import com.cas.business.repository.CourtCaseRepository;
 import com.cas.business.repository.DeputationHistoryRepository;
 import com.cas.business.repository.DeputationRepository;
 import com.cas.business.repository.DocumentRepository;
+import com.cas.business.repository.EnquiryHistoryRepository;
+import com.cas.business.repository.EnquiryRepository;
 import com.cas.business.repository.InspectionHistoryRepository;
 import com.cas.business.repository.InspectionRepository;
 import com.cas.business.repository.MemberHistoryRepository;
@@ -115,6 +123,10 @@ public class BasicDetailsController {
 	@Autowired StockVerificationHistoryRepository stockVerificationHistoryRepository;
 	@Autowired InspectionRepository inspectionRepository;
 	@Autowired InspectionHistoryRepository inspectionHistoryRepository;
+	@Autowired EnquiryRepository enquiryRepository;
+	@Autowired EnquiryHistoryRepository enquiryHistoryRepository;
+	@Autowired CourtCaseRepository courtCaseRepository;
+	@Autowired CourtCaseHistoryRepository courtCaseHistoryRepository;
 
 	@GetMapping("/member/list")
 	public ModelAndView getMemberPage() {
@@ -777,7 +789,6 @@ public class BasicDetailsController {
 		model.put(Menu.DEPUTATION_DETAILS_M.toString(), "active");
 		return new ModelAndView("basicdetails", model);
 	}
-	
 
 	@GetMapping("/inspection/list")
 	public ModelAndView getInspectionPage() {
@@ -806,7 +817,6 @@ public class BasicDetailsController {
 			BindingResult result, ModelMap model) {
 		
 		String groupId = "";
-		
 		if(inspection != null && inspection.getDocumentId() != null && !inspection.getDocumentId().equals("")) {
 			groupId = inspection.getDocumentId();
 		}
@@ -817,10 +827,9 @@ public class BasicDetailsController {
 		saveDocuments(files, society.getId(), groupId, userDetails.getLoginId());
 		
 		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
-		
 		List<String> fileNames = documents.stream()
-			    .map(Document::getFileName)
-			    .collect(Collectors.toList());
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
 		
 		inspection.setFileNames(String.join(", ", fileNames));
 		inspection.setDocumentId(groupId);
@@ -832,7 +841,6 @@ public class BasicDetailsController {
 		model.put(Menu.INSPECTION_M.toString(), "active");
 		model.put("documents", documents);
 		model.addAttribute("message", "Inspection Details has been saved successfully.");
-		
 		return "basicdetails";
 	}
 
@@ -846,10 +854,9 @@ public class BasicDetailsController {
 
 		String groupId = inspection.getDocumentId();
 		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
-		
 		List<String> fileNames = documents.stream()
-			    .map(Document::getFileName)
-			    .collect(Collectors.toList());
+									    .map(Document::getFileName)
+									    .collect(Collectors.toList());
 		
 		inspection.setFileNames(String.join(", ", fileNames));
 		inspection.setDocumentId(groupId);
@@ -861,7 +868,6 @@ public class BasicDetailsController {
 		model.put(Menu.INSPECTION_M.toString(), "active");
 		model.put("documents", documents);
 		model.addAttribute("message", "Inspection has been saved successfully.");
-		
 		return "basicdetails";
 	}
 
@@ -900,7 +906,6 @@ public class BasicDetailsController {
 		return new ModelAndView("basicdetails", model);
 	}
 	
-
 	@GetMapping("/petition/list")
 	public ModelAndView getPetitionPage() {
 		Map<String, Object> model = new HashMap<>();
@@ -908,7 +913,6 @@ public class BasicDetailsController {
 		model.put("petitionList", petitionList);
 		model.put("pageName", "petition");
 		model.put(Menu.PETITION_DETAILS_M.toString(), "active");
-		log.info("petilist {}" , petitionList);
 		return new ModelAndView("basicdetails", model);
 	}
 
@@ -929,26 +933,22 @@ public class BasicDetailsController {
 
 		String groupId = petition.getDocumentId();
 		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
-		
 		List<String> fileNames = documents.stream()
-			    .map(Document::getFileName)
-			    .collect(Collectors.toList());
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
 		
 		petition.setFileNames(String.join(", ", fileNames));
 		petition.setDocumentId(groupId);
 		petition.setSocietyId(society.getId());
 		petition = petitionRepository.save(petition);
-		log.info("Petition saved {}", petition);
 		petitionHistoryRepository.save(PetitionHistory.setUpObject(petition, userDetails.getLoginId()));
 		
 		model.put("pageName", "addpetition");
 		model.put(Menu.PETITION_DETAILS_M.toString(), "active");
 		model.put("documents", documents);
 		model.addAttribute("message", "Petition has been saved successfully.");
-		
 		return "basicdetails";
 	}
-
 
 	@PostMapping(value="/petition/add")
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
@@ -960,7 +960,6 @@ public class BasicDetailsController {
 			BindingResult result, ModelMap model) {
 		
 		String groupId = "";
-		
 		if(petition != null && petition.getDocumentId() != null && !petition.getDocumentId().equals("")) {
 			groupId = petition.getDocumentId();
 		}
@@ -969,29 +968,23 @@ public class BasicDetailsController {
 		}
 		
 		saveDocuments(files, society.getId(), groupId, userDetails.getLoginId());
-		
 		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
-		
 		List<String> fileNames = documents.stream()
-			    .map(Document::getFileName)
-			    .collect(Collectors.toList());
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
 		
 		petition.setFileNames(String.join(", ", fileNames));
 		petition.setDocumentId(groupId);
 		petition.setSocietyId(society.getId());
 		petition = petitionRepository.save(petition);
-		log.info("Petition saved {}", petition);
 		petitionHistoryRepository.save(PetitionHistory.setUpObject(petition, userDetails.getLoginId()));
 		
 		model.put("pageName", "addpetition");
 		model.put(Menu.PETITION_DETAILS_M.toString(), "active");
 		model.put("documents", documents);
 		model.addAttribute("message", "Petition has been saved successfully.");
-		
 		return "basicdetails";
 	}
-	
-
 
 	@PostMapping("/petition/edit")
 	public ModelAndView getEditPetitionPage(
@@ -1026,6 +1019,174 @@ public class BasicDetailsController {
 		model.put("pageName", "petitionhistory");
 		model.put(Menu.PETITION_DETAILS_M.toString(), "active");
 		return new ModelAndView("basicdetails", model);
+	}
+	
+	@GetMapping("/enquiry/list")
+	public ModelAndView getEnquiryPage() {
+		Map<String, Object> model = new HashMap<>();
+		List<Enquiry> enquiryList = enquiryRepository.findAllByOrderByIdDesc();
+		model.put("enquiryList", enquiryList);
+		model.put("pageName", "enquiry");
+		model.put(Menu.ENQUIRY_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@GetMapping("/enquiry/add")
+	public ModelAndView getAddEnquiryPage(@ModelAttribute("enquiry") Enquiry enquiry, BindingResult result, ModelMap model) {
+		model.put("pageName", "addenquiry");
+		model.put(Menu.ENQUIRY_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/enquiry/add")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String saveEnquiry(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("enquiry") Enquiry enquiry,
+			@RequestParam("file") MultipartFile[] files,
+			BindingResult result, ModelMap model) {
+		
+		String groupId = "";
+		if(enquiry != null && enquiry.getDocumentId() != null && !enquiry.getDocumentId().equals("")) {
+			groupId = enquiry.getDocumentId();
+		}
+		else {
+			groupId = new Date().getTime()+"";
+		}
+		
+		saveDocuments(files, society.getId(), groupId, userDetails.getLoginId());
+		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
+		List<String> fileNames = documents.stream()
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
+		
+		enquiry.setFileNames(String.join(", ", fileNames));
+		enquiry.setDocumentId(groupId);
+		enquiry.setSocietyId(society.getId());
+		enquiry = enquiryRepository.save(enquiry);
+		enquiryHistoryRepository.save(EnquiryHistory.setUpObject(enquiry, userDetails.getLoginId()));
+		
+		model.put("pageName", "addenquiry");
+		model.put(Menu.ENQUIRY_M.toString(), "active");
+		model.put("documents", documents);
+		model.addAttribute("message", "Enquiry details has been saved successfully.");
+		return "basicdetails";
+	}
+
+	@GetMapping(value="/enquiry/update")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String updateEnquiry(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("enquiry") Enquiry enquiry,
+			BindingResult result, ModelMap model) {
+
+		String groupId = enquiry.getDocumentId();
+		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
+		List<String> fileNames = documents.stream()
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
+		
+		enquiry.setFileNames(String.join(", ", fileNames));
+		enquiry.setDocumentId(groupId);
+		enquiry.setSocietyId(society.getId());
+		enquiry = enquiryRepository.save(enquiry);
+		enquiryHistoryRepository.save(EnquiryHistory.setUpObject(enquiry, userDetails.getLoginId()));
+		
+		model.put("pageName", "addenquiry");
+		model.put(Menu.ENQUIRY_M.toString(), "active");
+		model.put("documents", documents);
+		model.addAttribute("message", "Enquiry details has been saved successfully.");
+		return "basicdetails";
+	}
+
+	@PostMapping("/enquiry/edit")
+	public ModelAndView getEditEnquiryPage(
+			@ModelAttribute("id") Integer enquiryId, BindingResult result, ModelMap model) {
+		Enquiry enquiry = enquiryRepository.findById(enquiryId).get();
+		model.put("pageName", "addenquiry");
+		model.put(Menu.ENQUIRY_M.toString(), "active");
+		model.put("enquiry", enquiry);
+		model.put("documents", documentRepository.findAllByGroupIdAndIsActive(enquiry.getDocumentId(), true));
+		model.put("isEdit", true);
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/enquiry/delete")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public ModelAndView deleteEnquiry(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("id") Integer enquiryId, 
+			BindingResult result, ModelMap model) {
+		enquiryHistoryRepository.save(EnquiryHistory.setUpObject(enquiryRepository.findById(enquiryId).get(), userDetails.getLoginId()));
+		enquiryRepository.deleteById(enquiryId);
+		model.addAttribute("message", "Enquiry Details has been deleted successfully.");
+		return getEnquiryPage();
+	}
+
+	@PostMapping("/enquiry/history")
+	public ModelAndView getEnquiryHistoryPage(@ModelAttribute("id") Integer enquiryId) {
+		Map<String, Object> model = new HashMap<>();
+		List<EnquiryHistory> enquiryHistoryList = enquiryHistoryRepository.findByEnquiryIdOrderByUpdatedOnDesc(enquiryId);
+		model.put("enquiryHistoryList", enquiryHistoryList);
+		model.put("pageName", "enquiryhistory");
+		model.put(Menu.ENQUIRY_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+	
+	@GetMapping("/courtcase/list")
+	public ModelAndView getCourtCasePage() {
+		Map<String, Object> model = new HashMap<>();
+		List<CourtCase> courtCaseList = courtCaseRepository.findAllByOrderByIdDesc();
+		model.put("courtCaseList", courtCaseList);
+		model.put("pageName", "courtcase");
+		model.put(Menu.COURT_CASE_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@GetMapping("/courtcase/add")
+	public ModelAndView getAddCourtCasePage(@ModelAttribute("courtcase") CourtCase courtCase, BindingResult result, ModelMap model) {
+		model.put("pageName", "addcourtcase");
+		model.put(Menu.COURT_CASE_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/courtcase/add")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String saveDeputation(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("courtcase") CourtCase courtCase, 
+			@RequestParam("file") MultipartFile[] files,
+			BindingResult result, ModelMap model) {
+		
+		String groupId = "";
+		if(courtCase != null && courtCase.getDocumentId() != null && !courtCase.getDocumentId().equals("")) {
+			groupId = courtCase.getDocumentId();
+		}
+		else {
+			groupId = new Date().getTime()+"";
+		}
+		
+		saveDocuments(files, society.getId(), groupId, userDetails.getLoginId());
+		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
+		List<String> fileNames = documents.stream()
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
+		
+		courtCase.setFileNames(String.join(", ", fileNames));
+		courtCase.setDocumentId(groupId);
+		courtCase.setSocietyId(society.getId());
+		courtCase = courtCaseRepository.save(courtCase);
+		courtCaseHistoryRepository.save(CourtCaseHistory.setUpObject(courtCase, userDetails.getLoginId()));
+
+		model.put("pageName", "addcourtcase");
+		model.put(Menu.COURT_CASE_M.toString(), "active");
+		model.put("documents", documents);
+		model.addAttribute("message", "Court case details has been saved successfully.");
+		return "basicdetails";
 	}
 
 	@GetMapping("/document/delete")
@@ -1090,7 +1251,4 @@ public class BasicDetailsController {
 		document.setCreatedBy(userId);
 		return documentRepository.save(document);
 	}
-	
-	
-	
 }

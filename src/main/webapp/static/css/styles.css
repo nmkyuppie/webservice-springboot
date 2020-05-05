@@ -516,6 +516,11 @@ select.form-control option{
 	padding: 9px;
     font-size: 18px;
     background: #048b75;
+    border-radius: 0 3px 3px 0;
+}
+
+.date input {
+    border-radius: 3px 0 0 3px !important;
 }
 
 .modal-body {

@@ -56,6 +56,5 @@ public class Petition implements Serializable {
     
     @OneToMany(mappedBy = "petition", fetch = FetchType.EAGER)
     @JsonManagedReference
-//    @JoinColumn(name = "dGroupId", referencedColumnName = "pDocumentId", nullable = false, insertable = false, updatable = false)
     private Set<Document> documents;
 }
