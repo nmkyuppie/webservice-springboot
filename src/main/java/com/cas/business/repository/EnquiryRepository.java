@@ -11,4 +11,6 @@ import com.cas.business.entity.Enquiry;
 public interface EnquiryRepository extends JpaRepository<Enquiry, Integer>{
 
 	List<Enquiry> findAllByOrderByIdDesc();
+
+	Enquiry findByDocumentId(String documentId);
 }

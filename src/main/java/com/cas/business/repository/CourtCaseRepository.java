@@ -12,4 +12,6 @@ public interface CourtCaseRepository extends JpaRepository<CourtCase, Integer>{
 
 	List<CourtCase> findAllByOrderByIdDesc();
 
+	CourtCase findByDocumentId(String documentId);
+
 }

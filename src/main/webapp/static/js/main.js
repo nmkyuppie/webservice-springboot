@@ -28,13 +28,13 @@ $(document).ready(function () {
 var numberOnly = function (obj, length) {
 	$(obj).removeClass("is-invalid");
 	$(obj).removeClass("is-valid");
-	var value = $(obj).val();
-	if(isNaN(value)){
+	var value = $(obj).val().trim();
+	if(isNaN(value) || value === ''){
 		$(obj).addClass("is-invalid");
 		$(obj).val('');
 	}
 	else{
-		if(value.length == length)
+		if(length === undefined || value.length == length)
 			$(obj).addClass("is-valid");
 	}
 }

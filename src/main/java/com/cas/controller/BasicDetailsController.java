@@ -39,6 +39,7 @@ import com.cas.business.entity.DeputationHistory;
 import com.cas.business.entity.Document;
 import com.cas.business.entity.Enquiry;
 import com.cas.business.entity.EnquiryHistory;
+import com.cas.business.entity.Family;
 import com.cas.business.entity.Inspection;
 import com.cas.business.entity.InspectionHistory;
 import com.cas.business.entity.Member;
@@ -47,6 +48,8 @@ import com.cas.business.entity.Petition;
 import com.cas.business.entity.PetitionHistory;
 import com.cas.business.entity.PromotionDetails;
 import com.cas.business.entity.PromotionDetailsHistory;
+import com.cas.business.entity.RTI;
+import com.cas.business.entity.RTIHistory;
 import com.cas.business.entity.RetirementDetails;
 import com.cas.business.entity.RetirementDetailsHistory;
 import com.cas.business.entity.Shares;
@@ -70,6 +73,7 @@ import com.cas.business.repository.DeputationRepository;
 import com.cas.business.repository.DocumentRepository;
 import com.cas.business.repository.EnquiryHistoryRepository;
 import com.cas.business.repository.EnquiryRepository;
+import com.cas.business.repository.FamilyRepository;
 import com.cas.business.repository.InspectionHistoryRepository;
 import com.cas.business.repository.InspectionRepository;
 import com.cas.business.repository.MemberHistoryRepository;
@@ -78,6 +82,8 @@ import com.cas.business.repository.PetitionHistoryRepository;
 import com.cas.business.repository.PetitionRepository;
 import com.cas.business.repository.PromotionDetailsHistoryRepository;
 import com.cas.business.repository.PromotionDetailsRepository;
+import com.cas.business.repository.RTIHistoryRepository;
+import com.cas.business.repository.RTIRepository;
 import com.cas.business.repository.RetirementDetailsHistoryRepository;
 import com.cas.business.repository.RetirementDetailsRepository;
 import com.cas.business.repository.SharesHistoryRepository;
@@ -127,6 +133,9 @@ public class BasicDetailsController {
 	@Autowired EnquiryHistoryRepository enquiryHistoryRepository;
 	@Autowired CourtCaseRepository courtCaseRepository;
 	@Autowired CourtCaseHistoryRepository courtCaseHistoryRepository;
+	@Autowired RTIRepository rtiRepository;
+	@Autowired RTIHistoryRepository rtiHistoryRepository;
+	@Autowired FamilyRepository familyRepository;
 
 	@GetMapping("/member/list")
 	public ModelAndView getMemberPage() {
@@ -271,7 +280,8 @@ public class BasicDetailsController {
 	}
 
 	@GetMapping("/societyEmployee/add")
-	public ModelAndView getAddSocietyEmployeePage(@ModelAttribute("societyEmployee") SocietyEmployee societyEmployee, BindingResult result, ModelMap model) {
+	public ModelAndView getAddSocietyEmployeePage(@ModelAttribute("societyEmployee") SocietyEmployee societyEmployee,  
+			@ModelAttribute("family") Family family,  BindingResult result, ModelMap model) {
 		model.put("pageName", "addsocietyemployee");
 		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
 		return new ModelAndView("basicdetails", model);
@@ -282,13 +292,15 @@ public class BasicDetailsController {
 	public String saveSocietyEmployee(
 			@SessionAttribute("userDetails") UserDetails userDetails,
 			@SessionAttribute("societyInfo") Society society, 
-			@ModelAttribute("societyEmployee") SocietyEmployee societyEmployee, 
+			@ModelAttribute("family") Family family,
+			@ModelAttribute("societyEmployee") SocietyEmployee societyEmployee,
 			BindingResult result, ModelMap model) {
 		societyEmployee.setSocietyId(society.getId());
 		societyEmployee = societyEmployeeRepository.save(societyEmployee);
 		societyEmployeeHistoryRepository.save(SocietyEmployeeHistory.setUpObject(societyEmployee, userDetails.getLoginId()));
 		model.addAttribute("message", "Society employee has been saved successfully.");
 		model.put("pageName", "addsocietyemployee");
+		model.put("isEdit", true);
 		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
 		return "basicdetails";
 	}
@@ -307,13 +319,46 @@ public class BasicDetailsController {
 	}
 
 	@PostMapping("/societyEmployee/edit")
-	public ModelAndView getEditSocietyEmployeePage(
+	public ModelAndView getEditSocietyEmployeePage(@ModelAttribute("family") Family family,
 			@ModelAttribute("id") Integer societyEmployeeId, BindingResult result, ModelMap model) {
 		SocietyEmployee societyEmployee = societyEmployeeRepository.findById(societyEmployeeId).get();
+		List<Family> familyList = familyRepository.findAllByFamilyEmployeeIdOrderByFamilyAgeDesc(societyEmployeeId);
 		model.put("pageName", "addsocietyemployee");
+		model.put("isEdit", true);
 		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
 		model.put("societyEmployee", societyEmployee);
+		model.put("familyList", familyList);
 		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/family")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String saveFamily(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("family") Family family, 
+			@ModelAttribute("action") String action, 
+			BindingResult result, ModelMap model) {
+		if(family.getFamilyEmployeeId() == null) {
+			family = familyRepository.findById(family.getFamilyId()).get();
+		}
+		Integer employeeId = family.getFamilyEmployeeId();
+		SocietyEmployee societyEmployee = societyEmployeeRepository.findById(employeeId).get();
+		family.setSocietyId(society.getId());
+		if (action.equalsIgnoreCase("add")) {
+			family = familyRepository.save(family);
+		}
+		else if (action.equalsIgnoreCase("delete")) {
+			familyRepository.delete(family);
+		}
+		List<Family> familyList = familyRepository.findAllByFamilyEmployeeIdOrderByFamilyAgeDesc(employeeId);
+		model.put("societyEmployee", societyEmployee);
+		model.put("familyList", familyList);
+		model.put("isEdit", true);
+		model.addAttribute("message", "Family member has been added successfully.");
+		model.put("pageName", "addsocietyemployee");
+		model.put(Menu.SOCIETY_EMPLOYEE_DETAILS_M.toString(), "active");
+		return "basicdetails";
 	}
 
 	@PostMapping("/societyEmployee/history")
@@ -1147,7 +1192,7 @@ public class BasicDetailsController {
 	}
 
 	@GetMapping("/courtcase/add")
-	public ModelAndView getAddCourtCasePage(@ModelAttribute("courtcase") CourtCase courtCase, BindingResult result, ModelMap model) {
+	public ModelAndView getAddCourtCasePage(@ModelAttribute("courtCase") CourtCase courtCase, BindingResult result, ModelMap model) {
 		model.put("pageName", "addcourtcase");
 		model.put(Menu.COURT_CASE_M.toString(), "active");
 		return new ModelAndView("basicdetails", model);
@@ -1155,10 +1200,10 @@ public class BasicDetailsController {
 
 	@PostMapping(value="/courtcase/add")
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
-	public String saveDeputation(
+	public String saveCourtCase(
 			@SessionAttribute("userDetails") UserDetails userDetails,
 			@SessionAttribute("societyInfo") Society society, 
-			@ModelAttribute("courtcase") CourtCase courtCase, 
+			@ModelAttribute("courtCase") CourtCase courtCase,
 			@RequestParam("file") MultipartFile[] files,
 			BindingResult result, ModelMap model) {
 		
@@ -1181,12 +1226,189 @@ public class BasicDetailsController {
 		courtCase.setSocietyId(society.getId());
 		courtCase = courtCaseRepository.save(courtCase);
 		courtCaseHistoryRepository.save(CourtCaseHistory.setUpObject(courtCase, userDetails.getLoginId()));
-
+		
 		model.put("pageName", "addcourtcase");
 		model.put(Menu.COURT_CASE_M.toString(), "active");
 		model.put("documents", documents);
 		model.addAttribute("message", "Court case details has been saved successfully.");
 		return "basicdetails";
+	}
+
+	@GetMapping(value="/courtcase/update")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String updateCourtCase(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("courtCase") CourtCase courtCase,
+			BindingResult result, ModelMap model) {
+
+		String groupId = courtCase.getDocumentId();
+		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
+		List<String> fileNames = documents.stream()
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
+		
+		courtCase.setFileNames(String.join(", ", fileNames));
+		courtCase.setDocumentId(groupId);
+		courtCase.setSocietyId(society.getId());
+		courtCase = courtCaseRepository.save(courtCase);
+		courtCaseHistoryRepository.save(CourtCaseHistory.setUpObject(courtCase, userDetails.getLoginId()));
+		
+		model.put("pageName", "addcourtcase");
+		model.put(Menu.COURT_CASE_M.toString(), "active");
+		model.put("documents", documents);
+		model.addAttribute("message", "Court case details has been saved successfully.");
+		return "basicdetails";
+	}
+
+	@PostMapping("/courtcase/edit")
+	public ModelAndView getEditCourtCasePage(
+			@ModelAttribute("id") Integer courtCaseId, BindingResult result, ModelMap model) {
+		CourtCase courtCase = courtCaseRepository.findById(courtCaseId).get();
+		model.put("pageName", "addcourtcase");
+		model.put(Menu.COURT_CASE_M.toString(), "active");
+		model.put("courtCase", courtCase);
+		model.put("documents", documentRepository.findAllByGroupIdAndIsActive(courtCase.getDocumentId(), true));
+		model.put("isEdit", true);
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/courtcase/delete")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public ModelAndView deleteCourtCase(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("id") Integer courtCaseId, 
+			BindingResult result, ModelMap model) {
+		courtCaseHistoryRepository.save(CourtCaseHistory.setUpObject(courtCaseRepository.findById(courtCaseId).get(), userDetails.getLoginId()));
+		courtCaseRepository.deleteById(courtCaseId);
+		model.addAttribute("message", "Court case details has been deleted successfully.");
+		return getCourtCasePage();
+	}
+
+	@PostMapping("/courtcase/history")
+	public ModelAndView getCourtCaseHistoryPage(@ModelAttribute("id") Integer courtCaseId) {
+		Map<String, Object> model = new HashMap<>();
+		List<CourtCaseHistory> courtCaseHistoryList = courtCaseHistoryRepository.findByCourtCaseIdOrderByUpdatedOnDesc(courtCaseId);
+		model.put("courtCaseHistoryList", courtCaseHistoryList);
+		model.put("pageName", "courtcasehistory");
+		model.put(Menu.COURT_CASE_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+	
+	@GetMapping("/rti/list")
+	public ModelAndView getRTIPage() {
+		Map<String, Object> model = new HashMap<>();
+		List<RTI> rtiList = rtiRepository.findAllByOrderByIdDesc();
+		model.put("rtiList", rtiList);
+		model.put("pageName", "rti");
+		model.put(Menu.RTI_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@GetMapping("/rti/add")
+	public ModelAndView getAddRTIPage(@ModelAttribute("rti") RTI rti, BindingResult result, ModelMap model) {
+		model.put("pageName", "addrti");
+		model.put(Menu.RTI_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/rti/add")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String saveCourtCase(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("rti") RTI rti,
+			@RequestParam("file") MultipartFile[] files,
+			BindingResult result, ModelMap model) {
+		
+		String groupId = "";
+		if(rti != null && rti.getDocumentId() != null && !rti.getDocumentId().equals("")) {
+			groupId = rti.getDocumentId();
+		}
+		else {
+			groupId = new Date().getTime()+"";
+		}
+		
+		saveDocuments(files, society.getId(), groupId, userDetails.getLoginId());
+		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
+		List<String> fileNames = documents.stream()
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
+		
+		rti.setFileNames(String.join(", ", fileNames));
+		rti.setDocumentId(groupId);
+		rti.setSocietyId(society.getId());
+		rti = rtiRepository.save(rti);
+		rtiHistoryRepository.save(RTIHistory.setUpObject(rti, userDetails.getLoginId()));
+		
+		model.put("pageName", "addrti");
+		model.put(Menu.RTI_M.toString(), "active");
+		model.put("documents", documents);
+		model.addAttribute("message", "RTI details has been saved successfully.");
+		return "basicdetails";
+	}
+
+	@GetMapping(value="/rti/update")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String updateRTI(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("rti") RTI rti,
+			BindingResult result, ModelMap model) {
+
+		String groupId = rti.getDocumentId();
+		List<Document> documents = documentRepository.findAllByGroupIdAndIsActive(groupId, true);
+		List<String> fileNames = documents.stream()
+										    .map(Document::getFileName)
+										    .collect(Collectors.toList());
+		
+		rti.setFileNames(String.join(", ", fileNames));
+		rti.setDocumentId(groupId);
+		rti.setSocietyId(society.getId());
+		rti = rtiRepository.save(rti);
+		rtiHistoryRepository.save(RTIHistory.setUpObject(rti, userDetails.getLoginId()));
+		
+		model.put("pageName", "addrti");
+		model.put(Menu.RTI_M.toString(), "active");
+		model.put("documents", documents);
+		model.addAttribute("message", "RTI details has been saved successfully.");
+		return "basicdetails";
+	}
+
+	@PostMapping("/rti/edit")
+	public ModelAndView getEditRTIPage(
+			@ModelAttribute("id") Integer rtiId, BindingResult result, ModelMap model) {
+		RTI rti = rtiRepository.findById(rtiId).get();
+		model.put("pageName", "addrti");
+		model.put(Menu.RTI_M.toString(), "active");
+		model.put("rti", rti);
+		model.put("documents", documentRepository.findAllByGroupIdAndIsActive(rti.getDocumentId(), true));
+		model.put("isEdit", true);
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value="/rti/delete")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public ModelAndView deleteRTI(
+			@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, 
+			@ModelAttribute("id") Integer rtiId, 
+			BindingResult result, ModelMap model) {
+		rtiHistoryRepository.save(RTIHistory.setUpObject(rtiRepository.findById(rtiId).get(), userDetails.getLoginId()));
+		rtiRepository.deleteById(rtiId);
+		model.addAttribute("message", "RTI details has been deleted successfully.");
+		return getRTIPage();
+	}
+
+	@PostMapping("/rti/history")
+	public ModelAndView getRTIHistoryPage(@ModelAttribute("id") Integer rtiId) {
+		Map<String, Object> model = new HashMap<>();
+		List<RTIHistory> rtiHistoryList = rtiHistoryRepository.findByRtiIdOrderByUpdatedOnDesc(rtiId);
+		model.put("rtiHistoryList", rtiHistoryList);
+		model.put("pageName", "rtihistory");
+		model.put(Menu.RTI_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
 	}
 
 	@GetMapping("/document/delete")
@@ -1223,6 +1445,14 @@ public class BasicDetailsController {
 			else if(pageName.equals("inspection")) {
 				Inspection inspection = inspectionRepository.findByDocumentId(groupId);
 				redirectAttributes.addFlashAttribute("inspection", inspection);
+			}
+			else if(pageName.equals("enquiry")) {
+				Enquiry enquiry = enquiryRepository.findByDocumentId(groupId);
+				redirectAttributes.addFlashAttribute("enquiry", enquiry);
+			}
+			else if(pageName.equals("courtcase")) {
+				CourtCase courtCase = courtCaseRepository.findByDocumentId(groupId);
+				redirectAttributes.addFlashAttribute("courtCase", courtCase);
 			}
 			return "redirect:/"+pageName+"/update";
 		}

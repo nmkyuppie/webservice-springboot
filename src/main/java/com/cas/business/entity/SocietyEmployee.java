@@ -67,4 +67,31 @@ public class SocietyEmployee implements Serializable {
     @Column(name = "sePan")
     private String pan;
 
+    @Column(name = "seAadhaarNumber")
+    private String aadhaarNumber;
+
+    @Column(name = "seIsSuspended")
+    private Boolean isSuspended;
+
+    @Column(name = "seIsDismissed")
+    private Boolean isDismissed;
+
+    @Column(name = "seIsRemoved")
+    private Boolean isRemoved;
+
+    @Column(name = "seSuspenseReason")
+    private String suspensionReason;
+
+    @Column(name = "seDismissReason")
+    private String dismissReason;
+
+    @Column(name = "seRemovedReason")
+    private String removedReason;
+
+    @Column(name = "seProbationDate")
+    private String probationDate;
+
+    @Column(name = "seRegularisationDate")
+    private String regularisationDate;
+
 }
