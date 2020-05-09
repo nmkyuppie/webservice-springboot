@@ -209,10 +209,10 @@
 							</li>
 						</ul>
 					</div>
-					<div id="${INSPECTION_M}">
+					<div id="${SPECIAL_REPORTS_M}">
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky ${INSPECTION_M}" href="/rti/list#active">
+								<a class="nav-link sidebar-sticky ${SPECIAL_REPORTS_M}" href="/specialReport/list#active">
 									<i class="fa fa-file-signature" aria-hidden="true"></i>&nbsp;
 									Special Report
 								</a>
