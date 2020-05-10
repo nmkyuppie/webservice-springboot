@@ -73,6 +73,33 @@ public class SocietyEmployeeHistory implements Serializable {
     @Column(name = "sehPan")
     private String pan;
 
+    @Column(name = "sehAadhaarNumber")
+    private String aadhaarNumber;
+
+    @Column(name = "sehIsSuspended")
+    private Boolean isSuspended;
+
+    @Column(name = "sehIsDismissed")
+    private Boolean isDismissed;
+
+    @Column(name = "sehIsRemoved")
+    private Boolean isRemoved;
+
+    @Column(name = "sehSuspenseReason")
+    private String suspensionReason;
+
+    @Column(name = "sehDismissReason")
+    private String dismissReason;
+
+    @Column(name = "sehRemovedReason")
+    private String removedReason;
+
+    @Column(name = "sehProbationDate")
+    private String probationDate;
+
+    @Column(name = "sehRegularisationDate")
+    private String regularisationDate;
+
     @Column(name = "sehUpdatedBy")
     private Integer updatedBy;
     
@@ -97,6 +124,15 @@ public class SocietyEmployeeHistory implements Serializable {
 		seh.setEmailId(se.getEmailId());
 		seh.setIsDisabledPerson(se.getIsDisabledPerson());
 		seh.setPan(se.getPan());
+		seh.setAadhaarNumber(se.getAadhaarNumber());
+		seh.setIsDismissed(se.getIsDismissed());
+		seh.setDismissReason(se.getDismissReason());
+		seh.setSuspensionReason(se.getSuspensionReason());
+		seh.setIsSuspended(se.getIsSuspended());
+		seh.setIsRemoved(se.getIsRemoved());
+		seh.setRemovedReason(se.getRemovedReason());
+		seh.setRegularisationDate(se.getRegularisationDate());
+		seh.setProbationDate(se.getProbationDate());
 		seh.setUpdatedBy(loginId);
 		return seh;
 	}

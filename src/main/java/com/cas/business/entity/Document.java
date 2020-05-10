@@ -26,8 +26,8 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"petition", "inspection", "enquiry", "courtCase"})
-@ToString(exclude = {"petition", "inspection"})
+@EqualsAndHashCode(exclude = {"petition", "inspection", "enquiry", "courtCase", "rti"})
+@ToString(exclude = {"petition", "inspection", "enquiry", "courtCase", "rti"})
 public class Document implements Serializable {
 
 	private static final long serialVersionUID = -5705651634213468482L;
@@ -75,5 +75,10 @@ public class Document implements Serializable {
     @JoinColumn(name="dGroupId", referencedColumnName = "ccDocumentId", nullable=false, insertable = false, updatable = false)
     @JsonBackReference
     private CourtCase courtCase;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="dGroupId", referencedColumnName = "rtiDocumentId", nullable=false, insertable = false, updatable = false)
+    @JsonBackReference
+    private RTI rti;
 
 }

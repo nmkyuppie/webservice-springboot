@@ -27,12 +27,21 @@
 							<th scope="col" nowrap="nowrap">Cadre</th>
 							<th scope="col" nowrap="nowrap">Joining Date</th>
 							<th scope="col" nowrap="nowrap">Retirement Date</th>
+							<th scope="col" nowrap="nowrap">Probation Date</th>
+							<th scope="col" nowrap="nowrap">Regularisation Date</th>
 							<th scope="col" nowrap="nowrap">Mobile Number</th>
 							<th scope="col" nowrap="nowrap">Email Id</th>
 							<th scope="col" nowrap="nowrap">Address</th>
 							<th scope="col" nowrap="nowrap">PAN</th>
+							<th scope="col" nowrap="nowrap">Aadhaar Number</th>
 							<th scope="col" nowrap="nowrap">Appointed By</th>
 							<th scope="col" nowrap="nowrap">Physically Challenged</th>
+							<th scope="col" nowrap="nowrap">Is Suspended?</th>
+							<th scope="col" nowrap="nowrap">Suspense Reason</th>
+							<th scope="col" nowrap="nowrap">Is Dismissed?</th>
+							<th scope="col" nowrap="nowrap">Dismiss Reason</th>
+							<th scope="col" nowrap="nowrap">Is Removed?</th>
+							<th scope="col" nowrap="nowrap">Remove Reason</th>
 							<th scope="col" nowrap="nowrap">Updated By</th>
 							<th scope="col" nowrap="nowrap">Updated On</th>
 						</tr>
@@ -48,10 +57,13 @@
 								<td nowrap="nowrap">${seh.cadre}</td>
 								<td nowrap="nowrap">${seh.joiningDate}</td>
 								<td nowrap="nowrap">${seh.retirementDate}</td>
+								<td nowrap="nowrap">${seh.probationDate}</td>
+								<td nowrap="nowrap">${seh.regularisationDate}</td>
 								<td nowrap="nowrap">${seh.mobileNumber}</td>
 								<td nowrap="nowrap">${seh.emailId}</td>
 								<td nowrap="nowrap">${seh.address}</td>
 								<td nowrap="nowrap">${seh.pan}</td>
+								<td nowrap="nowrap">${seh.aadhaarNumber}</td>
 								<td nowrap="nowrap">${seh.appointedBy}</td>
 								<td nowrap="nowrap">
 									<c:choose>
@@ -66,6 +78,27 @@
 							            No
 							         </c:otherwise>
 							      </c:choose>
+								</td>
+								<td>
+									<c:if test="${seh.isSuspended}">Yes</c:if>
+									<c:if test="${not seh.isSuspended}">No</c:if>
+								</td>
+								<td>
+									<c:if test="${seh.isSuspended}">${seh.suspensionReason}</c:if>
+								</td>
+								<td>
+									<c:if test="${seh.isDismissed}">Yes</c:if>
+									<c:if test="${not seh.isDismissed}">No</c:if>
+								</td>
+								<td>
+									<c:if test="${seh.isDismissed}">${seh.dismissReason}</c:if>
+								</td>
+								<td>
+									<c:if test="${seh.isRemoved}">Yes</c:if>
+									<c:if test="${not seh.isRemoved}">No</c:if>
+								</td>
+								<td>
+									<c:if test="${seh.isRemoved}">${seh.removedReason}</c:if>
 								</td>
 								<td nowrap="nowrap">${seh.updatedBy}</td>
 								<td nowrap="nowrap">${seh.updatedOn}</td>

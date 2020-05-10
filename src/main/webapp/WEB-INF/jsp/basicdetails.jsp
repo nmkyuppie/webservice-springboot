@@ -189,20 +189,20 @@
 							</li>
 						</ul>
 					</div>
-					<div id="${INSPECTION_M}">
+					<div id="${COURT_CASE_M}">
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky ${INSPECTION_M}" href="/courtCase/list#active">
+								<a class="nav-link sidebar-sticky ${COURT_CASE_M}" href="/courtcase/list#active">
 									<i class="fa fa-balance-scale" aria-hidden="true"></i>&nbsp;
 									Court Case Details
 								</a>
 							</li>
 						</ul>
 					</div>
-					<div id="${INSPECTION_M}">
+					<div id="${RTI_M}">
 						<ul class="nav flex-column">
 							<li class="nav-item">
-								<a class="nav-link sidebar-sticky ${INSPECTION_M}" href="/rti/list#active">
+								<a class="nav-link sidebar-sticky ${RTI_M}" href="/rti/list#active">
 									<i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;
 									RTI
 								</a>
