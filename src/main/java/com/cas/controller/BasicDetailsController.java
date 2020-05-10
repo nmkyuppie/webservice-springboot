@@ -826,7 +826,7 @@ public class BasicDetailsController {
 				.setUpObject(specialReportRepository.findById(specialReportId).get(), userDetails.getLoginId()));
 		specialReportRepository.deleteById(specialReportId);
 		model.addAttribute("message", "Special Report details has been deleted successfully.");
-		return getDeputationPage();
+		return getSpecialReportPage();
 	}
 
 	@PostMapping("/specialReport/history")
