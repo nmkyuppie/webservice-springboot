@@ -8,7 +8,7 @@
 
     <div class="row justify-content-end" style="margin: 15px -15px;">
     	<div class="col offset-md-6">
-    		<form action="/stockVerification/list#active" method="GET">
+    		<form action="/specialReport/list#active" method="GET">
     			<button type="submit" class="btn btn-primary float-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
     		</form>
     	</div>

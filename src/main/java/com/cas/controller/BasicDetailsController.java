@@ -57,6 +57,8 @@ import com.cas.business.entity.SharesHistory;
 import com.cas.business.entity.Society;
 import com.cas.business.entity.SocietyEmployee;
 import com.cas.business.entity.SocietyEmployeeHistory;
+import com.cas.business.entity.SpecialReport;
+import com.cas.business.entity.SpecialReportHistory;
 import com.cas.business.entity.StockVerification;
 import com.cas.business.entity.StockVerificationHistory;
 import com.cas.business.entity.UserDetails;
@@ -91,6 +93,8 @@ import com.cas.business.repository.SharesRepository;
 import com.cas.business.repository.SocietyEmployeeHistoryRepository;
 import com.cas.business.repository.SocietyEmployeeRepository;
 import com.cas.business.repository.SocietyRepository;
+import com.cas.business.repository.SpecialReportHistoryRepository;
+import com.cas.business.repository.SpecialReportRepository;
 import com.cas.business.repository.StockVerificationHistoryRepository;
 import com.cas.business.repository.StockVerificationRepository;
 import com.cas.utils.FileUtils;
@@ -122,6 +126,8 @@ public class BasicDetailsController {
 	@Autowired PetitionRepository petitionRepository;
 	@Autowired PetitionHistoryRepository petitionHistoryRepository;
 	@Autowired DeputationRepository deputationRepository;
+	@Autowired SpecialReportRepository specialReportRepository;
+	@Autowired SpecialReportHistoryRepository specialReportHistoryRepository;
 	@Autowired DeputationHistoryRepository deputationHistoryRepository;
 	@Autowired BonusDetailsRepository bonusDetailsRepository;
 	@Autowired BonusDetailsHistoryRepository bonusDetailsHistoryRepository;
@@ -766,6 +772,71 @@ public class BasicDetailsController {
 		model.put("stockVerificationHistoryList", stockVerificationHistoryList);
 		model.put("pageName", "stockverificationhistory");
 		model.put(Menu.STOCK_VERIFICATION_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+	
+	@GetMapping("/specialReport/list")
+	public ModelAndView getSpecialReportPage() {
+		Map<String, Object> model = new HashMap<>();
+		List<SpecialReport> specialReportList = specialReportRepository.findAllByOrderByIdDesc();
+		model.put("specialReportList", specialReportList);
+		model.put("pageName", "specialreport");
+		model.put(Menu.SPECIAL_REPORTS_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@GetMapping("/specialReport/add")
+	public ModelAndView getAddSpecialReportPage(@ModelAttribute("specialReport") SpecialReport specialReport,
+			BindingResult result, ModelMap model) {
+		model.put("pageName", "addspecialreport");
+		model.put(Menu.SPECIAL_REPORTS_M.toString(), "active");
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value = "/specialReport/add")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public String saveSpecialReport(@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society,
+			@ModelAttribute("specialReport") SpecialReport specialReport, BindingResult result, ModelMap model) {
+		specialReport.setSocietyId(society.getId());
+		specialReport = specialReportRepository.save(specialReport);
+		specialReportHistoryRepository.save(SpecialReportHistory.setUpObject(specialReport, userDetails.getLoginId()));
+		model.addAttribute("message", "Special Report has been saved successfully.");
+		model.put("pageName", "addspecialreport");
+		model.put(Menu.SPECIAL_REPORTS_M.toString(), "active");
+		return "basicdetails";
+	}
+
+	@PostMapping("/specialReport/edit")
+	public ModelAndView getEditSpecialReportPage(@ModelAttribute("id") Integer specialReportId, BindingResult result,
+			ModelMap model) {
+		SpecialReport specialReport = specialReportRepository.findById(specialReportId).get();
+		model.put("pageName", "addspecialreport");
+		model.put(Menu.SPECIAL_REPORTS_M.toString(), "active");
+		model.put("specialReport", specialReport);
+		return new ModelAndView("basicdetails", model);
+	}
+
+	@PostMapping(value = "/specialReport/delete")
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public ModelAndView deleteSpecialReport(@SessionAttribute("userDetails") UserDetails userDetails,
+			@SessionAttribute("societyInfo") Society society, @ModelAttribute("id") Integer specialReportId,
+			BindingResult result, ModelMap model) {
+		specialReportHistoryRepository.save(SpecialReportHistory
+				.setUpObject(specialReportRepository.findById(specialReportId).get(), userDetails.getLoginId()));
+		specialReportRepository.deleteById(specialReportId);
+		model.addAttribute("message", "Special Report details has been deleted successfully.");
+		return getSpecialReportPage();
+	}
+
+	@PostMapping("/specialReport/history")
+	public ModelAndView getSpecialReportHistoryPage(@ModelAttribute("id") Integer specialReportId) {
+		Map<String, Object> model = new HashMap<>();
+		List<SpecialReportHistory> specialReportHistoryList = specialReportHistoryRepository
+				.findBySpecialReportIdOrderByUpdatedOnDesc(specialReportId);
+		model.put("specialReportHistoryList", specialReportHistoryList);
+		model.put("pageName", "specialreporthistory");
+		model.put(Menu.DEPUTATION_DETAILS_M.toString(), "active");
 		return new ModelAndView("basicdetails", model);
 	}
 
